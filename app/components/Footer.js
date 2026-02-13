@@ -89,7 +89,7 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-blue-400" />
-              gm.kiterobotics@gmail.com
+              info@kiterobotics.in
             </li>
             <li className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4 text-green-500" />
