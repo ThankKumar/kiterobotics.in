@@ -129,6 +129,7 @@ export default function Footer() {
             <li><a href="#about" className="hover:text-blue-400">About</a></li>
             <li><a href="#services" className="hover:text-blue-400">Services</a></li>
             <li><a href="#contact" className="hover:text-blue-400">Contact</a></li>
+            <li><a href="#contact" className="hover:text-blue-400">Career</a></li>
           </ul>
         </motion.div>
 
