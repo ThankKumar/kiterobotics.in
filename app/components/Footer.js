@@ -66,11 +66,11 @@ export default function Footer() {
         >
           <h3 className="text-lg font-semibold text-white mb-3">Headquarters</h3>
           <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Bihar</li>
+            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Delhi</li>
             <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Chennai</li>
             <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Hyderabad</li>
             <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Mumbai</li>
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Kolkata</li>
+            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Karnatka</li>
           </ul>
         </motion.div>
 
