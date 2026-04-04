@@ -51,7 +51,7 @@
 
 
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 // Components
@@ -61,16 +61,12 @@ import About from "./components/About";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import FloatingRobot from "./components/FloatingRobot"; // ✅ ADD THIS
+import FloatingRobot from "./components/FloatingRobot";
+import CustomCursor from "./components/CustomCursor";
 
 // Fonts
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -83,8 +79,11 @@ export const metadata = {
 // Layout
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.variable} antialiased bg-[#050914] text-white`}>
+
+        {/* Custom Glowing Cursor */}
+        <CustomCursor />
 
         {/* 🤖 FLOATING ROBOT (VISIBLE EVERYWHERE) */}
         <FloatingRobot />

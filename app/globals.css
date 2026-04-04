@@ -1,44 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff; 
-  --foreground: #171717;
+  --background: #03060d; 
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-     --background: #0a0a0a; 
-     --foreground: #ededed; 
-  }
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-
-/* 🌈 Animated Gradient Background */
-body {
-  background: linear-gradient(270deg, #fdfbfb, #ebedee, #e0f7fa, #f3e5f5);
-  background-size: 600% 600%;
-  animation: gradientBG 20s ease infinite;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #03060d;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e3a8a;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-} 
+::selection {
+  background-color: rgba(59, 130, 246, 0.5);
+  color: #fff;
+}
+
+/* Scanline Animation */
+@keyframes scanline {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.animate-scanline {
+  animation: scanline 4s linear infinite;
+  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+/* 3D Transform Utils */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}

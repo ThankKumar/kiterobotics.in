@@ -1,22 +1,12 @@
-
 "use client";
 import { motion } from "framer-motion";
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Instagram,
-  MessageCircle,
-  MapPin,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { MessageCircle, MapPin, Phone, Mail } from "lucide-react";
+import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12 text-center md:text-left">
+    <footer className="bg-[#02040a] text-gray-400 py-16 px-6 border-t border-blue-900/30">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12 text-center md:text-left relative z-10 w-full">
 
         {/* Brand + Logo */}
         <motion.div
@@ -24,35 +14,34 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center md:items-start"
+          className="flex flex-col items-center md:items-start col-span-1 md:col-span-2 pr-0 md:pr-10"
         >
-          <a href="#home" className="relative inline-block group">
+          <a href="#home" className="relative inline-block group mb-6">
             <motion.div
-              className="absolute inset-0 rounded-xl blur-2xl bg-gradient-to-r from-green-400 via-blue-500 to-cyan-400 opacity-60"
-              animate={{ scale: [1, 1.15, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
+              className="absolute inset-0 rounded-2xl blur-[15px] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="relative p-[3px] rounded-xl bg-gradient-to-r from-green-500 to-blue-500 shadow-xl"
-            >
-              <img
-                src="/kite_logo.jpg"
-                alt="KITE Robotics Logo"
-                width={80}
-                height={80}
-                className="rounded-xl w-[80px] h-auto"
-              />
-            </motion.div>
+            <div className="relative p-[2px] rounded-2xl bg-[#0a101f] border border-blue-900/50 shadow-xl group-hover:border-blue-500 transition-colors">
+              <div className="bg-white rounded-xl p-2 px-3">
+                <img
+                  src="/kite_logo.jpg"
+                  alt="KITE Robotics Logo"
+                  width={120}
+                  height={80}
+                  className="h-10 w-auto object-contain"
+                />
+              </div>
+            </div>
           </a>
 
-          <div className="mt-4">
-            <h2 className="text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-500 to-cyan-400">
+          <div>
+            <h2 className="text-2xl font-extrabold text-white tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
               KITE ROBOTICS
             </h2>
-            <p className="mt-2 text-gray-400 text-sm">
-              Empowering Innovation with Robotics, AI & IoT <br/>
-              Built and Operated by IITs  Talent
+            <p className="mt-4 text-gray-500 text-sm leading-relaxed font-light">
+              Empowering Innovation with Robotics, AI & IoT. <br/>
+              Built and Operated by IIT Talent.
             </p>
           </div>
         </motion.div>
@@ -64,13 +53,13 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <h3 className="text-lg font-semibold text-white mb-3">Headquarters</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Bihar</li>
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Chennai</li>
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Hyderabad</li>
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Mumbai</li>
-            <li className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" /> Kolkata</li>
+          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Headquarters</h3>
+          <ul className="space-y-3 text-sm font-light">
+            {['Bihar', 'Chennai', 'Hyderabad', 'Mumbai', 'Kolkata'].map((loc, idx) => (
+              <li key={idx} className="flex items-center gap-3 text-gray-400">
+                <MapPin className="w-4 h-4 text-blue-500" /> {loc}
+              </li>
+            ))}
           </ul>
         </motion.div>
 
@@ -81,63 +70,53 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h3 className="text-lg font-semibold text-white mb-3">Contact Us</h3>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-green-400" />
+          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Contact Stream</h3>
+          <ul className="space-y-4 text-sm font-light">
+            <li className="flex items-center gap-3 text-gray-400">
+              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><Phone className="w-4 h-4 text-cyan-400" /></div>
               +91 956 8466 985
             </li>
-            <li className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-blue-400" />
+            <li className="flex items-center gap-3 text-gray-400 break-all text-left">
+              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><Mail className="w-4 h-4 text-cyan-400" /></div>
               gm.kiterobotics@gmail.com
             </li>
-            <li className="flex items-center gap-2">
-              <MessageCircle className="w-4 h-4 text-green-500" />
+            <li className="flex items-center gap-3 text-gray-400">
+              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><MessageCircle className="w-4 h-4 text-green-400" /></div>
               +91 956 8466 985
             </li>
           </ul>
         </motion.div>
 
-        {/* Social Media */}
+        {/* Social Media & Links */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <h3 className="text-lg font-semibold text-white mb-3">Follow Us</h3>
-          <div className="flex flex-wrap gap-5 justify-center md:justify-start">
-            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7409878807303598080" className="hover:text-blue-400"><Linkedin /></a>
-            <a href="https://www.facebook.com/share/14Ua5eeJSi2/" className="hover:text-blue-400"><Facebook /></a>
-            <a href="https://www.instagram.com/robotics_kite/" className="hover:text-pink-400"><Instagram /></a>
-            <a href="https://whatsapp.com/channel/0029Vb5ecgSBvvsp5Owh9P0g" className="hover:text-green-400"><MessageCircle /></a>
-            <a href="https://x.com/RoboticsKite" className="hover:text-blue-400"><Twitter /></a>
-            <a href="https://github.com/roboticskite" className="hover:text-gray-400"><Github /></a>
+          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Grid Links</h3>
+          <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7409878807303598080" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaLinkedin size={18}/></a>
+            <a href="https://www.facebook.com/share/14Ua5eeJSi2/" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaFacebook size={18}/></a>
+            <a href="https://www.instagram.com/robotics_kite/" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaInstagram size={18}/></a>
+            <a href="https://x.com/RoboticsKite" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaTwitter size={18}/></a>
+            <a href="https://github.com/roboticskite" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaGithub size={18}/></a>
           </div>
-        </motion.div>
 
-        {/* Quick Links (LAST) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="#home" className="hover:text-blue-400">Home</a></li>
-            <li><a href="#about" className="hover:text-blue-400">About</a></li>
-            <li><a href="#services" className="hover:text-blue-400">Services</a></li>
-            <li><a href="#contact" className="hover:text-blue-400">Contact</a></li>
+          <ul className="flex flex-wrap gap-4 justify-center md:justify-start text-sm font-light text-gray-500">
+            <li><a href="#home" className="hover:text-blue-400 transition-colors">Home</a></li>
+            <li><a href="#about" className="hover:text-blue-400 transition-colors">About</a></li>
+            <li><a href="#services" className="hover:text-blue-400 transition-colors">Services</a></li>
+            <li><a href="#faq" className="hover:text-blue-400 transition-colors">FAQ</a></li>
           </ul>
         </motion.div>
 
       </div>
 
-      {/* Bottom */}
-      <div className="text-center text-sm text-gray-500 mt-10 border-t border-gray-700 pt-4">
+      {/* Bottom Legal */}
+      <div className="text-center text-xs text-gray-600 mt-16 border-t border-blue-900/20 pt-6">
         © {new Date().getFullYear()} KITE ROBOTICS. All rights reserved.<br />
-        AI Disclosure: This write-up was supported by AI-based technology.
+        <span className="mt-1 inline-block opacity-50">System architecture supported by AI protocols.</span>
       </div>
     </footer>
   );

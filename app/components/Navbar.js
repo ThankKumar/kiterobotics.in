@@ -1,232 +1,17 @@
 
 
 
-
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import { motion } from "framer-motion";
-// import { Menu, X } from "lucide-react";
-// import Image from "next/image";
-
-// const WHATSAPP_LINK =
-//   "https://api.whatsapp.com/send/?phone=9195648666985&text=Hello+Sir%2C+I+am+contacting+you+via+WhatsApp&type=phone_number&app_absent=0";
-
-// /* ================= OFFER BAR ================= */
-// function OfferBar() {
-//   const [timeLeft, setTimeLeft] = useState(5 * 24 * 60 * 60);
-
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-//     }, 1000);
-//     return () => clearInterval(timer);
-//   }, []);
-
-//   const days = Math.floor(timeLeft / (24 * 60 * 60));
-//   const hours = Math.floor((timeLeft % (24 * 60 * 60)) / 3600);
-//   const minutes = Math.floor((timeLeft % 3600) / 60);
-//   const seconds = timeLeft % 60;
-
-//   return (
-//     <div className="fixed top-0 left-0 w-full z-[60] bg-black/30 backdrop-blur-sm text-white overflow-hidden">
-//       <motion.div
-//         initial={{ x: "100%" }}
-//         animate={{ x: "-100%" }}
-//         transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-//         className="whitespace-nowrap py-1 text-xs md:text-sm font-medium"
-//       >
-//         🎉 Offer Ends In: {days}d {hours}h {minutes}m {seconds}s —
-//         Enroll Now at KITE ROBOTICS 🚀 | +91 95648 66985
-//       </motion.div>
-//     </div>
-//   );
-// }
-
-// /* ================= NAVBAR ================= */
-// export default function Navbar() {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [activeSection, setActiveSection] = useState("home");
-//   const [scrolled, setScrolled] = useState(false);
-
-//   const sections = ["home", "services", "about", "contact"];
-
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       let current = "home";
-//       sections.forEach((id) => {
-//         const section = document.getElementById(id);
-//         if (section) {
-//           const offsetTop = section.offsetTop - 80; // ✅ FIXED
-//           if (window.scrollY >= offsetTop) current = id;
-//         }
-//       });
-//       setActiveSection(current);
-//       setScrolled(window.scrollY > 50);
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, []);
-
-//   return (
-//     <>
-//       <OfferBar />
-
-//       {/* 🔥 FLOATING DEMO BUTTON (RIGHT-BOTTOM, TRANSPARENT) */}
-//       <a
-//         href={WHATSAPP_LINK}
-//         target="_blank"
-//         className="fixed right-6 bottom-6 z-[9999]
-//                    px-4 py-2 rounded-full
-//                    text-purple-500 font-semibold
-//                    border border-purple-500
-//                    backdrop-blur-sm
-//                    glow-btn
-//                    hover:text-purple-700 hover:border-purple-700"
-//       >
-//         Demo
-//       </a>
-
-//       <motion.nav
-//         initial={{ opacity: 0, y: -20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5 }}
-//         className={`fixed w-full top-6 left-0 z-50 transition-all duration-500 ${
-//           scrolled ? "bg-white shadow-md" : "bg-transparent"
-//         }`}
-//       >
-//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//           <div className="flex items-center justify-between h-16">
-
-//             {/* Logo */}
-//             <div className="flex items-center gap-2">
-//               <div className="p-[3px] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-//                 <Image
-//                   src="/kite_logo.jpg"
-//                   alt="KITE Robotics Logo"
-//                   width={48}
-//                   height={48}
-//                   className="rounded-full bg-white"
-//                 />
-//               </div>
-//               <span
-//                 className={`text-xl font-bold ${
-//                   scrolled ? "text-blue-600" : "text-white"
-//                 }`}
-//               >
-//                 KITE ROBOTICS
-//               </span>
-//             </div>
-
-//             {/* Desktop Menu */}
-//             <ul className="hidden md:flex items-center space-x-6 font-medium">
-//               {sections.map((id) => (
-//                 <li key={id}>
-//                   <a
-//                     href={`#${id}`}
-//                     className={`transition-colors ${
-//                       activeSection === id
-//                         ? "text-blue-600 font-semibold"
-//                         : scrolled
-//                         ? "text-gray-700 hover:text-blue-500"
-//                         : "text-white hover:text-blue-200"
-//                     }`}
-//                   >
-//                     {id.charAt(0).toUpperCase() + id.slice(1)}
-//                   </a>
-//                 </li>
-//               ))}
-
-//               {/* Sign Up → WhatsApp */}
-//               <li>
-//                 <a
-//                   href={WHATSAPP_LINK}
-//                   target="_blank"
-//                   className={`px-4 py-2 rounded-full font-semibold transition ${
-//                     scrolled
-//                       ? "bg-blue-600 text-white hover:bg-blue-700"
-//                       : "bg-white text-blue-600 hover:bg-blue-100"
-//                   }`}
-//                 >
-//                   Sign Up
-//                 </a>
-//               </li>
-//             </ul>
-
-//             {/* Mobile Button */}
-//             <button
-//               className={`md:hidden ${
-//                 scrolled ? "text-gray-700" : "text-white"
-//               }`}
-//               onClick={() => setIsOpen(!isOpen)}
-//             >
-//               {isOpen ? <X size={28} /> : <Menu size={28} />}
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Mobile Menu */}
-//         {isOpen && (
-//           <motion.div
-//             initial={{ opacity: 0, y: -10 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 0.4 }}
-//             className={`md:hidden ${
-//               scrolled ? "bg-white" : "bg-black/80"
-//             }`}
-//           >
-//             <ul className="flex flex-col items-center py-4 space-y-4">
-//               {sections.map((id) => (
-//                 <li key={id}>
-//                   <a
-//                     href={`#${id}`}
-//                     onClick={() => setIsOpen(false)}
-//                     className={`${
-//                       scrolled
-//                         ? "text-gray-700 hover:text-blue-500"
-//                         : "text-white hover:text-blue-200"
-//                     }`}
-//                   >
-//                     {id.charAt(0).toUpperCase() + id.slice(1)}
-//                   </a>
-//                 </li>
-//               ))}
-
-//               {/* Mobile Sign Up → WhatsApp */}
-//               <li>
-//                 <a
-//                   href={WHATSAPP_LINK}
-//                   target="_blank"
-//                   onClick={() => setIsOpen(false)}
-//                   className="px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700"
-//                 >
-//                   Sign Up
-//                 </a>
-//               </li>
-//             </ul>
-//           </motion.div>
-//         )}
-//       </motion.nav>
-//     </>
-//   );
-// }
-
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import SignupModal from "./SignupModal";
 
 const WHATSAPP_LINK =
   "https://api.whatsapp.com/send/?phone=9195648666985&text=Hello+Sir%2C+I+am+contacting+you+via+WhatsApp&type=phone_number&app_absent=0";
 
-/* ================= OFFER BAR ================= */
 function OfferBar() {
   const [timeLeft, setTimeLeft] = useState(5 * 24 * 60 * 60);
 
@@ -243,27 +28,30 @@ function OfferBar() {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[60] bg-black/30 backdrop-blur-sm text-white overflow-hidden">
+    <div className="fixed top-0 left-0 w-full z-[100] bg-[#050914]/80 backdrop-blur-md border-b border-blue-500/20 text-blue-100 overflow-hidden">
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: "-100%" }}
-        transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-        className="whitespace-nowrap py-1 text-xs md:text-sm font-medium"
+        transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+        className="whitespace-nowrap py-1.5 text-xs md:text-sm font-medium tracking-wider flex items-center gap-3"
       >
-        🎉 Offer Ends In: {days}d {hours}h {minutes}m {seconds}s —
-        Enroll Now at KITE ROBOTICS 🚀 | +91 95648 66985
+        <span className="flex h-2 w-2 relative">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        SYSTEM PROTOCOL ONLINE — 🎉 Limited Offer Ends In: {days}d {hours}h {minutes}m {seconds}s — Establish Connection Now at KITE ROBOTICS 🚀 | +91 95648 66985
       </motion.div>
     </div>
   );
 }
 
-/* ================= NAVBAR ================= */
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
 
-  const sections = ["home", "services", "about", "contact"];
+  const sections = ["home", "services", "products", "about", "contact"];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -271,12 +59,12 @@ export default function Navbar() {
       sections.forEach((id) => {
         const section = document.getElementById(id);
         if (section) {
-          const offsetTop = section.offsetTop - 80;
+          const offsetTop = section.offsetTop - 100;
           if (window.scrollY >= offsetTop) current = id;
         }
       });
       setActiveSection(current);
-      setScrolled(window.scrollY > 50); // only for text color
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -286,87 +74,84 @@ export default function Navbar() {
   return (
     <>
       <OfferBar />
+      <SignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* 🔥 FLOATING DEMO BUTTON */}
-      <a
-        href={WHATSAPP_LINK}
-        target="_blank"
-        className="fixed right-6 bottom-6 z-[9999]
-                   px-4 py-2 rounded-full
-                   text-purple-500 font-semibold
-                   border border-purple-500
-                   backdrop-blur-sm
-                   glow-btn
-                   hover:text-purple-700 hover:border-purple-700"
+      {/* Floating Fast-Connect Button */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="fixed right-6 bottom-6 z-[90] px-5 py-2.5 rounded-full text-blue-400 font-bold border border-blue-500/50 bg-[#0a101f]/80 backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] hover:bg-blue-600 hover:text-white transition-all duration-300 group overflow-hidden"
       >
-        Demo
-      </a>
+        <span className="relative z-10 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover:bg-white animate-pulse"></div>
+          Connect
+        </span>
+        <div className="absolute inset-0 bg-blue-500/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
 
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="fixed w-full top-6 left-0 z-50 bg-transparent"
+        className={`fixed w-full top-8 left-0 z-50 transition-all duration-300 ${
+          scrolled 
+            ? "bg-[#050914]/80 backdrop-blur-lg border-b border-blue-500/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)] py-2" 
+            : "bg-transparent py-4"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-14">
 
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="p-[3px] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            <div className="flex items-center gap-3 group cursor-pointer">
+              <div className="p-[2px] rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.8)] transition-shadow">
                 <Image
                   src="/kite_logo.jpg"
                   alt="KITE Robotics Logo"
-                  width={48}
-                  height={48}
+                  width={44}
+                  height={44}
                   className="rounded-full bg-white"
                 />
               </div>
-              <span
-                className={`text-xl font-bold ${
-                  scrolled ? "text-blue-600" : "text-white"
-                }`}
-              >
-                KITE ROBOTICS
+              <span className="text-xl font-bold text-white tracking-widest group-hover:text-blue-400 transition-colors">
+                KITE<span className="text-blue-500">ROBOTICS</span>
               </span>
             </div>
 
             {/* Desktop Menu */}
-            <ul className="hidden md:flex items-center space-x-6 font-medium">
+            <ul className="hidden md:flex items-center space-x-8 font-medium">
               {sections.map((id) => (
                 <li key={id}>
                   <a
                     href={`#${id}`}
-                    className={`transition-colors ${
-                      activeSection === id
-                        ? "text-blue-600 font-semibold"
-                        : scrolled
-                        ? "text-gray-200 hover:text-blue-300"
-                        : "text-white hover:text-blue-200"
+                    className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
+                      activeSection === id ? "text-blue-400" : "text-gray-300 hover:text-white"
                     }`}
                   >
-                    {id.charAt(0).toUpperCase() + id.slice(1)}
+                    {id}
+                    {activeSection === id && (
+                      <motion.div
+                        layoutId="nav-underline"
+                        className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
                   </a>
                 </li>
               ))}
 
-              {/* Sign Up */}
               <li>
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  className="px-4 py-2 rounded-full font-semibold bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm"
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="px-5 py-2 text-sm uppercase tracking-wider rounded-full font-bold border border-blue-500 text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-[0_0_10px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
                 >
                   Sign Up
-                </a>
+                </button>
               </li>
             </ul>
 
             {/* Mobile Button */}
             <button
-              className={`md:hidden ${
-                scrolled ? "text-white" : "text-white"
-              }`}
+              className="md:hidden text-gray-200 hover:text-blue-400 transition-colors"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -377,33 +162,36 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="md:hidden bg-black/80"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-[#050914]/95 backdrop-blur-xl border-t border-blue-500/20 mt-2 overflow-hidden"
           >
-            <ul className="flex flex-col items-center py-4 space-y-4">
+            <ul className="flex flex-col py-6 space-y-6 px-6">
               {sections.map((id) => (
                 <li key={id}>
                   <a
                     href={`#${id}`}
                     onClick={() => setIsOpen(false)}
-                    className="text-white hover:text-blue-300"
+                    className={`block text-lg uppercase tracking-wider font-semibold ${
+                      activeSection === id ? "text-blue-400" : "text-gray-300 hover:text-white"
+                    }`}
                   >
-                    {id.charAt(0).toUpperCase() + id.slice(1)}
+                    {id}
                   </a>
                 </li>
               ))}
 
               <li>
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  onClick={() => setIsOpen(false)}
-                  className="px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700"
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsModalOpen(true);
+                  }}
+                  className="w-full px-6 py-3 rounded-xl bg-blue-600 text-white font-bold text-center tracking-wider hover:bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.4)]"
                 >
-                  Sign Up
-                </a>
+                  SIGN UP PROTOCOL
+                </button>
               </li>
             </ul>
           </motion.div>
