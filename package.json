@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@tailwindcss/postcss": "^4.2.2",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
