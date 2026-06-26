@@ -18,7 +18,7 @@ export default function SignupModal({ isOpen, onClose }) {
       
       setTimeout(() => {
         const text = `Hello Sir, I am ${formData.name}. I am interested in ${formData.course}. My phone is ${formData.phone}. ${formData.message}`;
-        const WHATSAPP_LINK = `https://api.whatsapp.com/send/?phone=9195648666985&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0`;
+        const WHATSAPP_LINK = `https://api.whatsapp.com/send/?phone=919564866985&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0`;
         window.open(WHATSAPP_LINK, "_blank");
         onClose();
         setTimeout(() => setStatus("idle"), 500); // reset after hidden
