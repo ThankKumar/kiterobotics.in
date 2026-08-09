@@ -7,10 +7,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import SignupModal from "./SignupModal";
 
 const WHATSAPP_LINK =
-  "https://api.whatsapp.com/send/?phone=9195648666985&text=Hello+Sir%2C+I+am+contacting+you+via+WhatsApp&type=phone_number&app_absent=0";
+  "https://api.whatsapp.com/send/?phone=919564866985&text=Hello+Sir%2C+I+am+contacting+you+via+WhatsApp&type=phone_number&app_absent=0";
 
 function OfferBar() {
   const [timeLeft, setTimeLeft] = useState(5 * 24 * 60 * 60);
@@ -52,6 +53,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const sections = ["home", "services", "products", "about", "contact"];
+  const navItems = [
+    { label: "home", href: "/", type: "page" },
+    { label: "services", href: "/#services", type: "page" },
+    { label: "products", href: "/#products", type: "page" },
+    { label: "about", href: "/#about", type: "page" },
+    { label: "blog", href: "/blog", type: "page" },
+    { label: "buy", href: "/buy", type: "page" },
+    { label: "careers", href: "https://kiterobotic-career.vercel.app/careers", type: "external" },
+    { label: "contact", href: "/#contact", type: "page" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,23 +130,36 @@ export default function Navbar() {
 
             {/* Desktop Menu */}
             <ul className="hidden md:flex items-center space-x-8 font-medium">
-              {sections.map((id) => (
-                <li key={id}>
-                  <a
-                    href={`#${id}`}
-                    className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
-                      activeSection === id ? "text-blue-400" : "text-gray-300 hover:text-white"
-                    }`}
-                  >
-                    {id}
-                    {activeSection === id && (
-                      <motion.div
-                        layoutId="nav-underline"
-                        className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
-                  </a>
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  {item.type === "external" ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
+                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
+                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                      {activeSection === item.label && (
+                        <motion.div
+                          layoutId="nav-underline"
+                          className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  )}
                 </li>
               ))}
 
@@ -168,17 +192,31 @@ export default function Navbar() {
             className="md:hidden bg-[#050914]/95 backdrop-blur-xl border-t border-blue-500/20 mt-2 overflow-hidden"
           >
             <ul className="flex flex-col py-6 space-y-6 px-6">
-              {sections.map((id) => (
-                <li key={id}>
-                  <a
-                    href={`#${id}`}
-                    onClick={() => setIsOpen(false)}
-                    className={`block text-lg uppercase tracking-wider font-semibold ${
-                      activeSection === id ? "text-blue-400" : "text-gray-300 hover:text-white"
-                    }`}
-                  >
-                    {id}
-                  </a>
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  {item.type === "external" ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsOpen(false)}
+                      className={`block text-lg uppercase tracking-wider font-semibold ${
+                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block text-lg uppercase tracking-wider font-semibold ${
+                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
 

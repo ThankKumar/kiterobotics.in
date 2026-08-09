@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import FloatingRobot from "./components/FloatingRobot";
 import CustomCursor from "./components/CustomCursor";
 import AskKite from "./components/AskKite";
+import RainBackground from "./components/RainBackground";
 
 // Fonts
 const inter = Inter({
@@ -43,6 +44,12 @@ export default function RootLayout({ children }) {
         {/* 🤖 ASK KITE CHATBOT */}
         <AskKite />
 
+        {/* Global Navbar */}
+        <Navbar />
+
+        {/* Rain Background */}
+        <RainBackground />
+
         {/* Page Content */}
         <main>{children}</main>
 
@@ -50,3 +57,5 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+

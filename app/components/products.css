@@ -1,0 +1,648 @@
+/* =========================================================
+   PRODUCT 3D AREA
+========================================================= */
+
+.product-visual {
+  position: relative;
+  width: 100%;
+  height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 900px;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 242, 255, 0.09),
+      transparent 65%
+    );
+
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   ARDUINO
+========================================================= */
+
+.arduino-board {
+  position: relative;
+
+  width: 125px;
+  height: 75px;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #064e3b,
+      #087f5b
+    );
+
+  border: 2px solid #10b981;
+
+  box-shadow:
+    0 0 15px rgba(16, 185, 129, 0.35),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+
+  transform-style: preserve-3d;
+}
+
+.chip {
+  position: absolute;
+
+  width: 35px;
+  height: 30px;
+
+  top: 22px;
+  left: 45px;
+
+  background: #111827;
+
+  border-radius: 4px;
+
+  border: 2px solid #374151;
+
+  box-shadow:
+    inset 0 0 8px black;
+}
+
+.usb {
+  position: absolute;
+
+  width: 20px;
+  height: 30px;
+
+  left: -15px;
+  top: 23px;
+
+  background: #cbd5e1;
+
+  border-radius: 3px;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,0.3);
+}
+
+.arduino-led {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  right: 18px;
+  top: 15px;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 6px #00f2ff,
+    0 0 15px #00f2ff;
+
+  animation: ledBlink 1s infinite;
+}
+
+@keyframes ledBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.pin-row {
+  position: absolute;
+
+  display: flex;
+
+  gap: 6px;
+}
+
+.pin-row span {
+  width: 4px;
+  height: 13px;
+
+  background: #d1d5db;
+
+  border-radius: 1px;
+}
+
+.pin-row.top {
+  top: -10px;
+  left: 15px;
+}
+
+.pin-row.bottom {
+  bottom: -10px;
+  left: 15px;
+}
+
+/* =========================================================
+   ROBOT
+========================================================= */
+
+.robot-3d {
+  position: relative;
+
+  width: 130px;
+  height: 100px;
+
+  transform-style: preserve-3d;
+}
+
+.robot-body {
+  position: absolute;
+
+  width: 100px;
+  height: 55px;
+
+  left: 15px;
+  top: 28px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e293b,
+      #334155
+    );
+
+  border: 2px solid #475569;
+
+  box-shadow:
+    0 0 20px rgba(59,130,246,0.25);
+}
+
+.robot-screen {
+  position: absolute;
+
+  width: 45px;
+  height: 25px;
+
+  left: 27px;
+  top: 13px;
+
+  border-radius: 5px;
+
+  background: #020617;
+
+  border: 1px solid #2563eb;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.robot-screen span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 10px #00f2ff;
+
+  animation: robotEye 1.5s infinite;
+}
+
+@keyframes robotEye {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.robot-wheel {
+  position: absolute;
+
+  width: 38px;
+  height: 38px;
+
+  bottom: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #475569 25%,
+      #020617 27%,
+      #020617 60%,
+      #334155 62%
+    );
+
+  border: 3px solid #64748b;
+}
+
+.robot-wheel.left {
+  left: 0;
+}
+
+.robot-wheel.right {
+  right: 0;
+}
+
+.robot-sensor {
+  position: absolute;
+
+  width: 55px;
+  height: 10px;
+
+  top: 5px;
+  left: 37px;
+
+  display: flex;
+
+  justify-content: space-around;
+}
+
+.robot-sensor i {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 10px #00f2ff;
+}
+
+.scan-line {
+  position: absolute;
+
+  width: 150px;
+  height: 1px;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 12px #00f2ff;
+}
+
+/* =========================================================
+   IOT
+========================================================= */
+
+.iot-board {
+  position: relative;
+
+  width: 125px;
+  height: 75px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #064e3b,
+      #047857
+    );
+
+  border: 2px solid #10b981;
+
+  transform-style: preserve-3d;
+
+  box-shadow:
+    0 0 20px rgba(16,185,129,0.3);
+}
+
+.iot-chip {
+  position: absolute;
+
+  width: 48px;
+  height: 35px;
+
+  left: 38px;
+  top: 20px;
+
+  background: #111827;
+
+  border-radius: 5px;
+
+  border: 2px solid #374151;
+}
+
+.iot-antenna {
+  position: absolute;
+
+  right: 5px;
+  top: 7px;
+
+  display: flex;
+
+  gap: 3px;
+}
+
+.iot-antenna span {
+  width: 3px;
+  height: 18px;
+
+  background: #d1d5db;
+}
+
+.iot-led {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  left: 15px;
+  top: 15px;
+
+  border-radius: 50%;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 15px #00f2ff;
+
+  animation: ledBlink 1s infinite;
+}
+
+.iot-pins {
+  position: absolute;
+
+  bottom: -10px;
+  left: 12px;
+
+  display: flex;
+
+  gap: 6px;
+}
+
+.iot-pins span {
+  width: 4px;
+  height: 12px;
+
+  background: #cbd5e1;
+}
+
+.wifi-ring {
+  position: absolute;
+
+  width: 40px;
+  height: 40px;
+
+  border: 2px solid #00f2ff;
+
+  border-radius: 50%;
+
+  right: 25px;
+  top: 35px;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   SENSOR
+========================================================= */
+
+.sensor-board {
+  position: relative;
+
+  width: 130px;
+  height: 75px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #14532d,
+      #166534
+    );
+
+  border: 2px solid #22c55e;
+
+  transform-style: preserve-3d;
+}
+
+.sensor-eye {
+  position: absolute;
+
+  width: 30px;
+  height: 30px;
+
+  top: 15px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 40% 35%,
+      #f8fafc,
+      #64748b 30%,
+      #1e293b 65%
+    );
+
+  border: 2px solid #94a3b8;
+
+  box-shadow:
+    inset 0 0 8px black;
+}
+
+.sensor-eye.left {
+  left: 23px;
+}
+
+.sensor-eye.right {
+  right: 23px;
+}
+
+.sensor-chip {
+  position: absolute;
+
+  width: 18px;
+  height: 12px;
+
+  bottom: 10px;
+  left: 56px;
+
+  background: #111827;
+
+  border-radius: 3px;
+}
+
+.sensor-pins {
+  position: absolute;
+
+  right: -15px;
+  top: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.sensor-pins span {
+  width: 15px;
+  height: 4px;
+
+  background: #cbd5e1;
+}
+
+.radar {
+  position: absolute;
+
+  width: 60px;
+  height: 60px;
+
+  border: 1px solid #00f2ff;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   AI
+========================================================= */
+
+.ai-core {
+  position: relative;
+
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  transform-style: preserve-3d;
+}
+
+.brain-core {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #a855f7;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(168,85,247,0.35),
+      rgba(49,46,129,0.5)
+    );
+
+  border: 2px solid #8b5cf6;
+
+  box-shadow:
+    0 0 20px rgba(139,92,246,0.7),
+    0 0 50px rgba(79,70,229,0.35);
+}
+
+.neural-node {
+  position: absolute;
+
+  left: 47px;
+  top: 47px;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #00f2ff;
+
+  box-shadow:
+    0 0 10px #00f2ff;
+}
+
+.ai-orbit {
+  position: absolute;
+
+  width: 125px;
+  height: 50px;
+
+  border: 1px solid rgba(0,242,255,0.5);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.orbit-one {
+  transform: rotateX(65deg) rotateZ(20deg);
+}
+
+.orbit-two {
+  transform: rotateX(65deg) rotateZ(-20deg);
+}
+
+/* =========================================================
+   PRODUCT ICON
+========================================================= */
+
+.product-icon {
+  width: 55px;
+  height: 55px;
+
+  margin-bottom: 14px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #60a5fa;
+
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #1f2937
+    );
+
+  border: 1px solid #374151;
+
+  transition:
+    all 0.4s ease;
+}
+
+.product-card:hover .product-icon {
+  color: #00f2ff;
+
+  border-color:
+    rgba(0,242,255,0.5);
+
+  box-shadow:
+    0 0 25px
+    rgba(0,242,255,0.2);
+
+  transform:
+    translateY(-4px)
+    rotateY(15deg);
+}

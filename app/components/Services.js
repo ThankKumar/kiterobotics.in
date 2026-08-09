@@ -3,56 +3,102 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
+/* =========================================================
+   SERVICES
+========================================================= */
+
 const services = [
-  { img: "/services/web_development.png", title: "Web Development", desc: "Designing fast, responsive, and secure websites." },
-  { img: "/services/mobile_development.png", title: "Mobile App Development", desc: "Building user-friendly Android & iOS apps." },
-  { img: "/services/robotics_Ai.png", title: "Robotics / AI", desc: "Hands-on robotics and AI solutions for the real world." },
-  { img: "/services/ml.png", title: "Machine Learning", desc: "Intelligent systems that learn and adapt." },
-  { img: "/services/technical_support.png", title: "Technical Support", desc: "Reliable troubleshooting and technical assistance." },
-  { img: "/services/iOt.png", title: "IoT Integration", desc: "Connecting devices and sensors to automate systems." },
-  { img: "/services/chat_support.png", title: "Chat Support", desc: "24/7 chat-based assistance to resolve queries quickly." },
-  { img: "/services/3dprinter.png", title: "3D-Printing", desc: "Designing and producing precise 3D models." },
-  { img: "/services/enginner_solution.png", title: "Engineering Tools", desc: "Advanced tools and solutions for development." },
-  { img: "/services/cyber_security.png", title: "Cybersecurity", desc: "Protecting systems and data from cyber threats." },
-  { img: "/services/clude_computing.png", title: "Cloud Computing", desc: "Deploying scalable apps on cloud platforms." },
-  { img: "/services/data_analystic.png", title: "Data Science", desc: "Analyzing data to extract actionable insights." },
+  {
+    title: "Robotics & AI",
+    symbol: "AI",
+  },
+  {
+    title: "Academic Support",
+    symbol: "AS",
+  },
+  {
+    title: "Curriculum Support",
+    symbol: "CS",
+  },
+  {
+    title: "Workshops",
+    symbol: "WS",
+  },
+  {
+    title: "3D Printing",
+    symbol: "3D",
+  },
+  {
+    title: "IT Support",
+    symbol: "IT",
+  },
+  {
+    title: "R&D Support",
+    symbol: "R&D",
+  },
+  {
+    title: "Atal Tinker Lab Setup",
+    symbol: "ATL",
+  },
 ];
 
-const WHATSAPP_LINK = "https://wa.me/9195648666985?text=Hello%20Sir%2C%20I%20am%20contacting%20you%20via%20WhatsApp";
+const WHATSAPP_LINK =
+  "https://wa.me/919564866985?text=Hello%20Sir%2C%20I%20am%20contacting%20you%20via%20WhatsApp";
 
-// 🌟 Particle Scatter & Return Component (Disabled on Mobile)
+/* =========================================================
+   HOLOGRAM PARTICLES
+========================================================= */
+
 const HologramParticles = ({ isHovered }) => {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    const newParticles = Array.from({ length: 50 }).map((_, i) => ({
+    const newParticles = Array.from({ length: 40 }).map((_, i) => ({
       id: i,
-      endX: (Math.random() - 0.5) * 200,
-      endY: (Math.random() - 0.5) * 200,
+      endX: (Math.random() - 0.5) * 220,
+      endY: (Math.random() - 0.5) * 220,
       size: Math.random() * 3 + 1,
       duration: 0.8 + Math.random() * 1.5,
+      delay: Math.random() * 0.5,
     }));
+
     setParticles(newParticles);
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-visible z-10 transform-style-3d">
+    <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-visible z-10">
       {particles.map((p) => (
         <motion.div
           key={p.id}
           className="absolute rounded-full bg-cyan-400 blur-[1px]"
-          style={{ width: p.size, height: p.size }}
-          initial={{ opacity: 0, x: 0, y: 0 }}
-          animate={isHovered ? {
-            opacity: [0, 1, 0],
-            x: [0, p.endX, 0],
-            y: [0, p.endY, 0],
-          } : { opacity: 0, x: 0, y: 0 }}
+          style={{
+            width: p.size,
+            height: p.size,
+          }}
+          initial={{
+            opacity: 0,
+            x: 0,
+            y: 0,
+          }}
+          animate={
+            isHovered
+              ? {
+                  opacity: [0, 1, 0],
+                  x: [0, p.endX, 0],
+                  y: [0, p.endY, 0],
+                }
+              : {
+                  opacity: 0,
+                  x: 0,
+                  y: 0,
+                }
+          }
           transition={{
             duration: p.duration,
+            delay: p.delay,
             repeat: isHovered ? Infinity : 0,
             repeatType: "mirror",
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
       ))}
@@ -60,187 +106,1133 @@ const HologramParticles = ({ isHovered }) => {
   );
 };
 
+/* =========================================================
+   ANIMATED SERVICE CORE
+========================================================= */
+
+function AnimatedServiceCore({ service, isHovered }) {
+  return (
+    <div className="relative w-28 h-28 md:w-32 md:h-32 flex items-center justify-center">
+
+      {/* Outer Glow */}
+      <motion.div
+        className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full bg-cyan-400/5 blur-2xl"
+        animate={{
+          scale: isHovered ? [1, 1.3, 1] : [1, 1.12, 1],
+          opacity: isHovered
+            ? [0.3, 0.8, 0.3]
+            : [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Outer Ring */}
+      <motion.div
+        className="absolute inset-0 rounded-full border border-cyan-400/30"
+        animate={{
+          rotate: 360,
+          scale: isHovered ? [1, 1.08, 1] : 1,
+        }}
+        transition={{
+          rotate: {
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear",
+          },
+          scale: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
+        }}
+      />
+
+      {/* Purple Ring */}
+      <motion.div
+        className="absolute inset-2 rounded-full border border-purple-500/30"
+        animate={{
+          rotate: -360,
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      {/* Dashed Ring */}
+      <motion.div
+        className="absolute inset-4 rounded-full border border-dashed border-cyan-400/50"
+        animate={{
+          rotate: 360,
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      {/* Small Orbit Ring */}
+      <motion.div
+        className="absolute inset-7 rounded-full border border-purple-400/20"
+        animate={{
+          rotate: -360,
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      {/* Central Reactor */}
+      <motion.div
+        className="
+          relative
+          w-16 h-16
+          md:w-20 md:h-20
+          rounded-full
+          flex
+          items-center
+          justify-center
+          bg-[#061522]
+          border
+          border-cyan-400/70
+          shadow-[0_0_20px_rgba(0,200,255,0.5)]
+          z-20
+          overflow-hidden
+        "
+        animate={{
+          scale: isHovered
+            ? [1, 1.12, 1]
+            : [1, 1.04, 1],
+          boxShadow: isHovered
+            ? [
+                "0 0 20px rgba(0,200,255,0.5)",
+                "0 0 45px rgba(0,200,255,1)",
+                "0 0 20px rgba(0,200,255,0.5)",
+              ]
+            : [
+                "0 0 15px rgba(0,200,255,0.3)",
+                "0 0 25px rgba(0,200,255,0.6)",
+                "0 0 15px rgba(0,200,255,0.3)",
+              ],
+        }}
+        transition={{
+          duration: 1.8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+
+        {/* Core Gradient */}
+        <motion.div
+          className="
+            absolute
+            inset-0
+            bg-gradient-to-br
+            from-cyan-400/20
+            via-transparent
+            to-purple-500/30
+          "
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+
+        {/* Central Symbol */}
+        <motion.span
+          className="
+            relative
+            z-10
+            text-cyan-300
+            font-black
+            text-xs
+            md:text-sm
+            tracking-widest
+          "
+          animate={{
+            opacity: [0.65, 1, 0.65],
+            textShadow: [
+              "0 0 5px rgba(0,200,255,0.4)",
+              "0 0 20px rgba(0,200,255,1)",
+              "0 0 5px rgba(0,200,255,0.4)",
+            ],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          {service.symbol}
+        </motion.span>
+
+        {/* Core Scan Line */}
+        <motion.div
+          className="
+            absolute
+            left-0
+            right-0
+            h-[2px]
+            bg-cyan-300/70
+            blur-[1px]
+          "
+          animate={{
+            top: ["0%", "100%", "0%"],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      </motion.div>
+
+      {/* Orbit Dot 1 */}
+      <motion.div
+        className="
+          absolute
+          w-2
+          h-2
+          rounded-full
+          bg-cyan-300
+          shadow-[0_0_12px_rgba(0,255,255,1)]
+        "
+        animate={{
+          rotate: 360,
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{
+          offsetPath: "ellipse(45px 45px at center)",
+        }}
+      />
+
+      {/* Orbit Dot 2 */}
+      <motion.div
+        className="
+          absolute
+          w-1.5
+          h-1.5
+          rounded-full
+          bg-purple-400
+          shadow-[0_0_10px_rgba(168,85,247,1)]
+        "
+        animate={{
+          rotate: -360,
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      {/* Top Indicator */}
+      <motion.span
+        className="
+          absolute
+          top-0
+          left-5
+          text-[9px]
+          text-cyan-400
+        "
+        animate={{
+          opacity: [0.2, 1, 0.2],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+        }}
+      >
+        +
+      </motion.span>
+
+      {/* Bottom Indicator */}
+      <motion.span
+        className="
+          absolute
+          bottom-1
+          right-5
+          text-[9px]
+          text-purple-400
+        "
+        animate={{
+          opacity: [1, 0.2, 1],
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+        }}
+      >
+        +
+      </motion.span>
+    </div>
+  );
+}
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
 function ServiceCard({ service, index, isMobile }) {
   const [isHovered, setIsHovered] = useState(false);
   const [ripples, setRipples] = useState([]);
   const cardRef = useRef(null);
-  
-  // Magnetic + 3D logic
+
+  /* Magnetic movement */
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Disable 3D tilt on mobile
-  const rotateX = useTransform(y, [-100, 100], isMobile ? [0, 0] : [20, -20]);
-  const rotateY = useTransform(x, [-100, 100], isMobile ? [0, 0] : [-20, 20]);
-  
-  // Magnetic Parallax for inner text elements (disabled on mobile)
-  const innerX = useTransform(x, [-100, 100], isMobile ? [0, 0] : [-10, 10]);
-  const innerY = useTransform(y, [-100, 100], isMobile ? [0, 0] : [-10, 10]);
+  /* 3D Tilt */
+  const rotateX = useTransform(
+    y,
+    [-100, 100],
+    isMobile ? [0, 0] : [18, -18]
+  );
 
+  const rotateY = useTransform(
+    x,
+    [-100, 100],
+    isMobile ? [0, 0] : [-18, 18]
+  );
+
+  /* Inner Parallax */
+  const innerX = useTransform(
+    x,
+    [-100, 100],
+    isMobile ? [0, 0] : [-8, 8]
+  );
+
+  const innerY = useTransform(
+    y,
+    [-100, 100],
+    isMobile ? [0, 0] : [-8, 8]
+  );
+
+  /* Mouse Movement */
   function handleMouse(event) {
     if (isMobile || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    x.set(event.clientX - rect.left - rect.width / 2);
-    y.set(event.clientY - rect.top - rect.height / 2);
+
+    const rect =
+      cardRef.current.getBoundingClientRect();
+
+    x.set(
+      event.clientX -
+        rect.left -
+        rect.width / 2
+    );
+
+    y.set(
+      event.clientY -
+        rect.top -
+        rect.height / 2
+    );
   }
 
+  /* Mouse Leave */
   function handleMouseLeave() {
     if (isMobile) return;
+
     x.set(0);
     y.set(0);
     setIsHovered(false);
   }
 
-  // Ripple Click Event
+  /* Ripple Click */
   function handleRipple(event) {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const rippleX = event.clientX - rect.left;
-    const rippleY = event.clientY - rect.top;
-    const newRipple = { x: rippleX, y: rippleY, id: Date.now() };
-    setRipples((prev) => [...prev, newRipple]);
+
+    const rect =
+      cardRef.current.getBoundingClientRect();
+
+    const rippleX =
+      event.clientX - rect.left;
+
+    const rippleY =
+      event.clientY - rect.top;
+
+    const newRipple = {
+      x: rippleX,
+      y: rippleY,
+      id: Date.now(),
+    };
+
+    setRipples((prev) => [
+      ...prev,
+      newRipple,
+    ]);
+
     setTimeout(() => {
-      setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
-    }, 600);
+      setRipples((prev) =>
+        prev.filter(
+          (r) => r.id !== newRipple.id
+        )
+      );
+    }, 700);
   }
 
   return (
     <motion.div
       ref={cardRef}
-      style={{ rotateX, rotateY, perspective: 1500 }}
+      style={{
+        rotateX,
+        rotateY,
+        perspective: 1500,
+      }}
       onMouseMove={handleMouse}
-      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseEnter={() =>
+        !isMobile &&
+        setIsHovered(true)
+      }
       onMouseLeave={handleMouseLeave}
       onClick={handleRipple}
-      initial={{ opacity: 0, y: isMobile ? 20 : 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.5, delay: isMobile ? 0 : (index % 4) * 0.1, type: "spring", stiffness: 100 }}
-      whileTap={isMobile ? { scale: 0.98 } : undefined}
-      className={`group relative rounded-2xl cursor-pointer w-full mb-6 md:mb-0 ${!isMobile && "transform-style-3d"}`}
+      initial={{
+        opacity: 0,
+        y: isMobile ? 20 : 50,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.1,
+      }}
+      transition={{
+        duration: 0.6,
+        delay:
+          isMobile
+            ? 0
+            : (index % 4) * 0.1,
+        type: "spring",
+        stiffness: 100,
+      }}
+      whileTap={
+        isMobile
+          ? {
+              scale: 0.98,
+            }
+          : undefined
+      }
+      className={`
+        group
+        relative
+        rounded-2xl
+        cursor-pointer
+        w-full
+        mb-6
+        md:mb-0
+        ${!isMobile
+          ? "transform-style-3d"
+          : ""}
+      `}
     >
-      {/* Intense glowing magnetic shadow undercard (desktop only) */}
+
+      {/* Magnetic Glow */}
       {!isMobile && (
-        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-70 blur-2xl transition duration-500 pointer-events-none"></div>
+        <motion.div
+          className="
+            absolute
+            -inset-1
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-400
+            via-blue-500
+            to-purple-600
+            blur-2xl
+            pointer-events-none
+          "
+          animate={
+            isHovered
+              ? {
+                  opacity: [
+                    0.2,
+                    0.7,
+                    0.2,
+                  ],
+                }
+              : {
+                  opacity: 0,
+                }
+          }
+          transition={{
+            duration: 2,
+            repeat:
+              isHovered
+                ? Infinity
+                : 0,
+          }}
+        />
       )}
 
-      {/* JARVIS Hologram Glassmorphism Card */}
-      <div className={`relative flex flex-col h-full bg-[#03060d]/60 backdrop-blur-xl border border-cyan-500/20 md:group-hover:border-cyan-400/80 rounded-2xl overflow-hidden transition-all duration-500 shadow-[0_4px_15px_rgb(0,0,0,0.5)] md:shadow-[0_8px_30px_rgb(0,0,0,0.5)] md:group-hover:shadow-none z-10 ${!isMobile && "transform-style-3d z-index-10"}`}>
-         
-         {/* Subtle Grid Circuit Pattern Background */}
-         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(0, 255, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.5) 1px, transparent 1px)", backgroundSize: "20px 20px" }}></div>
-         
-         {/* Scanline Effect Overlay (desktop only for performance) */}
-         {!isMobile && <div className="absolute inset-0 pointer-events-none opacity-20 animate-scanline z-0"></div>}
+      {/* Card */}
+      <div
+        className={`
+          relative
+          flex
+          flex-col
+          h-full
+          min-h-[360px]
+          bg-[#03060d]/75
+          backdrop-blur-xl
+          border
+          border-cyan-500/20
+          md:group-hover:border-cyan-400/80
+          rounded-2xl
+          overflow-hidden
+          transition-all
+          duration-500
+          shadow-[0_8px_30px_rgb(0,0,0,0.5)]
+          md:group-hover:shadow-[0_0_35px_rgba(0,200,255,0.15)]
+          z-10
+          ${!isMobile
+            ? "transform-style-3d"
+            : ""}
+        `}
+      >
 
-         {/* Ripple Clicks rendered here */}
-         {ripples.map((rip) => (
-            <motion.div
-              key={rip.id}
-              className="absolute rounded-full bg-cyan-400/40 pointer-events-none z-10 mix-blend-screen"
-              style={{ left: rip.x, top: rip.y }}
-              initial={{ width: 0, height: 0, x: "-50%", y: "-50%", opacity: 1 }}
-              animate={{ width: isMobile ? 250 : 400, height: isMobile ? 250 : 400, opacity: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+        {/* Circuit Grid */}
+        <div
+          className="
+            absolute
+            inset-0
+            opacity-[0.04]
+            pointer-events-none
+          "
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(0,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.5) 1px, transparent 1px)",
+            backgroundSize:
+              "20px 20px",
+          }}
+        />
+
+        {/* Scanline */}
+        {!isMobile && (
+          <motion.div
+            className="
+              absolute
+              left-0
+              right-0
+              h-[2px]
+              bg-gradient-to-r
+              from-transparent
+              via-cyan-400
+              to-transparent
+              pointer-events-none
+              z-10
+            "
+            animate={{
+              top: [
+                "0%",
+                "100%",
+              ],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        )}
+
+        {/* Ripple */}
+        {ripples.map((rip) => (
+          <motion.div
+            key={rip.id}
+            className="
+              absolute
+              rounded-full
+              bg-cyan-400/30
+              pointer-events-none
+              z-30
+              mix-blend-screen
+            "
+            style={{
+              left: rip.x,
+              top: rip.y,
+            }}
+            initial={{
+              width: 0,
+              height: 0,
+              x: "-50%",
+              y: "-50%",
+              opacity: 1,
+            }}
+            animate={{
+              width: isMobile
+                ? 300
+                : 450,
+              height: isMobile
+                ? 300
+                : 450,
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.7,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+
+        {/* Animated Core */}
+        <div
+          className="
+            w-full
+            flex
+            justify-center
+            items-center
+            pt-8
+            md:pt-10
+            pb-4
+            relative
+            z-20
+          "
+        >
+          {!isMobile && (
+            <HologramParticles
+              isHovered={isHovered}
             />
-         ))}
+          )}
 
-         <div className="w-full flex justify-center items-center py-6 md:py-10 relative z-20">
-            {/* Hologram Scattered Particles (desktop only) */}
-            {!isMobile && <HologramParticles isHovered={isHovered} />}
+          <motion.div
+            style={
+              isMobile
+                ? {}
+                : {
+                    x: innerX,
+                    y: innerY,
+                  }
+            }
+            whileHover={
+              !isMobile
+                ? {
+                    scale: 1.08,
+                  }
+                : {}
+            }
+            transition={{
+              duration: 0.4,
+            }}
+          >
+            <AnimatedServiceCore
+              service={service}
+              isHovered={isHovered}
+            />
+          </motion.div>
+        </div>
 
-            {/* Image container: gradient bg, rounded, glowing */}
-            <motion.div 
-              style={isMobile ? {} : { x: innerX, y: innerY }}
-              className="w-20 h-20 md:w-28 md:h-28 rounded-full border border-cyan-500/40 shadow-[0_0_15px_rgba(0,200,255,0.4)] md:group-hover:shadow-[0_0_35px_rgba(0,200,255,0.9)] flex items-center justify-center overflow-hidden transition-shadow duration-500 relative z-20"
-              whileHover={!isMobile ? { scale: 1.15, rotate: 5 } : {}}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.img 
-                src={service.img} 
-                alt={service.title} 
-                className="w-full h-full object-cover rounded-full transition-all duration-300"
-                animate={!isMobile && isHovered ? { y: [0, -3, 0] } : { y: 0 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-              {/* Inner glowing ring overlay for holographic feel */}
-              <div className="absolute inset-0 rounded-full shadow-[inset_0_0_15px_rgba(0,200,255,0.5)] pointer-events-none"></div>
-            </motion.div>
-         </div>
-         
-         {/* Text Section with inner Parallax */}
-         <motion.div style={isMobile ? {} : { x: innerX, y: innerY }} className="px-5 pb-6 flex flex-col flex-1 text-center items-center z-20 relative">
-            <h4 className="text-[15px] md:text-lg font-bold mb-2 md:mb-3 text-white/95 md:group-hover:text-cyan-400 transition-colors uppercase tracking-widest md:opacity-80 md:group-hover:opacity-100 min-h-[40px] md:min-h-[48px] flex items-center justify-center">
-              {service.title}
-            </h4>
-            <p className="text-[12px] md:text-sm text-gray-400 mb-5 md:mb-6 flex-1 font-light leading-relaxed md:opacity-70 md:group-hover:opacity-100 transition-opacity duration-300">
-              {service.desc}
-            </p>
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              onClick={(e) => { e.stopPropagation(); }}
-              rel="noopener noreferrer"
-              className="mt-auto relative z-30 px-5 flex items-center justify-center h-[44px] md:py-3 w-full max-w-[200px] rounded-xl bg-[#0a101f] md:bg-white/5 md:backdrop-blur-sm border border-cyan-500/30 md:border-cyan-500/20 text-[11px] md:text-[10px] tracking-widest uppercase font-bold text-cyan-400 md:text-gray-300 md:group-hover:bg-cyan-500 md:group-hover:text-black md:group-hover:border-cyan-400 transition-all duration-300 pointer-events-auto block md:group-hover:shadow-[0_0_20px_rgba(0,200,255,0.8)] active:bg-cyan-600 active:text-white"
-            >
-              Initialize Base
-            </a>
-         </motion.div>
+        {/* Service Name + Button */}
+        <motion.div
+          style={
+            isMobile
+              ? {}
+              : {
+                  x: innerX,
+                  y: innerY,
+                }
+          }
+          className="
+            px-5
+            pb-7
+            flex
+            flex-col
+            flex-1
+            text-center
+            items-center
+            z-20
+            relative
+          "
+        >
+
+          {/* Service Name */}
+          <motion.h4
+            className="
+              text-[15px]
+              md:text-lg
+              font-bold
+              mb-6
+              text-white/95
+              md:group-hover:text-cyan-400
+              transition-colors
+              uppercase
+              tracking-widest
+              min-h-[48px]
+              flex
+              items-center
+              justify-center
+            "
+            animate={
+              isHovered
+                ? {
+                    letterSpacing:
+                      "0.18em",
+                  }
+                : {}
+            }
+            transition={{
+              duration: 0.3,
+            }}
+          >
+            {service.title}
+          </motion.h4>
+
+          {/* Button */}
+          <motion.a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+            rel="noopener noreferrer"
+            whileHover={
+              !isMobile
+                ? {
+                    scale: 1.05,
+                    boxShadow:
+                      "0 0 25px rgba(0,200,255,0.8)",
+                  }
+                : {}
+            }
+            whileTap={{
+              scale: 0.95,
+            }}
+            className="
+              mt-auto
+              relative
+              z-30
+              px-5
+              flex
+              items-center
+              justify-center
+              h-[44px]
+              w-full
+              max-w-[200px]
+              rounded-xl
+              bg-[#0a101f]
+              md:bg-white/5
+              md:backdrop-blur-sm
+              border
+              border-cyan-500/30
+              text-[11px]
+              md:text-[10px]
+              tracking-widest
+              uppercase
+              font-bold
+              text-cyan-400
+              md:text-gray-300
+              md:group-hover:bg-cyan-500
+              md:group-hover:text-black
+              md:group-hover:border-cyan-400
+              transition-all
+              duration-300
+            "
+          >
+            Initialize Base
+          </motion.a>
+        </motion.div>
+
+        {/* Animated Bottom Energy Line */}
+        <motion.div
+          className="
+            absolute
+            bottom-0
+            h-[2px]
+            bg-gradient-to-r
+            from-transparent
+            via-cyan-400
+            to-transparent
+          "
+          animate={{
+            width: [
+              "0%",
+              "100%",
+              "0%",
+            ],
+            left: [
+              "0%",
+              "0%",
+              "100%",
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay:
+              index * 0.15,
+          }}
+        />
+
+        {/* Corner Decorations */}
+        <div
+          className="
+            absolute
+            top-3
+            left-3
+            w-5
+            h-5
+            border-l
+            border-t
+            border-cyan-400/40
+          "
+        />
+
+        <div
+          className="
+            absolute
+            top-3
+            right-3
+            w-5
+            h-5
+            border-r
+            border-t
+            border-purple-400/40
+          "
+        />
+
+        <div
+          className="
+            absolute
+            bottom-3
+            left-3
+            w-5
+            h-5
+            border-l
+            border-b
+            border-purple-400/40
+          "
+        />
+
+        <div
+          className="
+            absolute
+            bottom-3
+            right-3
+            w-5
+            h-5
+            border-r
+            border-b
+            border-cyan-400/40
+          "
+        />
       </div>
     </motion.div>
   );
 }
 
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
 export default function ShopPage() {
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] =
+    useState(true);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize(); // Init Check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const handleResize = () => {
+      setIsMobile(
+        window.innerWidth < 768
+      );
+    };
+
+    handleResize();
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
   }, []);
 
   return (
-    <div id="services" className="relative px-4 py-20 md:p-6 md:py-24 min-h-screen bg-[#03060d] overflow-hidden">
-      <div className="absolute inset-x-0 h-40 top-0 bg-gradient-to-b from-[#050914] to-transparent pointer-events-none z-10"></div>
-      
-      {/* Background Parallax Hologram Spheres (Disabled animation on Mobile) */}
-      <motion.div 
-        className="absolute top-1/4 -right-10 md:-right-20 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full bg-purple-600/10 blur-[100px] md:blur-[140px] pointer-events-none"
-        initial={{ y: 0 }}
-        animate={!isMobile ? { y: [0, -80, 0] } : { y: 0 }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      ></motion.div>
-      <motion.div 
-        className="absolute bottom-0 -left-10 md:-left-20 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full bg-cyan-600/10 blur-[100px] md:blur-[140px] pointer-events-none"
-        initial={{ y: 0 }}
-        animate={!isMobile ? { y: [0, 80, 0] } : { y: 0 }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      ></motion.div>
+    <div
+      id="services"
+      className="
+        relative
+        px-4
+        py-20
+        md:p-6
+        md:py-24
+        min-h-screen
+        bg-[#03060d]
+        overflow-hidden
+      "
+    >
 
-      <div className="max-w-7xl mx-auto md:px-6 relative z-20">
+      {/* Top Gradient */}
+      <div
+        className="
+          absolute
+          inset-x-0
+          h-40
+          top-0
+          bg-gradient-to-b
+          from-[#050914]
+          to-transparent
+          pointer-events-none
+          z-10
+        "
+      />
+
+      {/* Purple Background Orb */}
+      <motion.div
+        className="
+          absolute
+          top-1/4
+          -right-10
+          md:-right-20
+          w-[400px]
+          md:w-[700px]
+          h-[400px]
+          md:h-[700px]
+          rounded-full
+          bg-purple-600/10
+          blur-[100px]
+          md:blur-[140px]
+          pointer-events-none
+        "
+        animate={{
+          y: [0, -80, 0],
+          scale: [
+            1,
+            1.1,
+            1,
+          ],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Cyan Background Orb */}
+      <motion.div
+        className="
+          absolute
+          bottom-0
+          -left-10
+          md:-left-20
+          w-[400px]
+          md:w-[700px]
+          h-[400px]
+          md:h-[700px]
+          rounded-full
+          bg-cyan-600/10
+          blur-[100px]
+          md:blur-[140px]
+          pointer-events-none
+        "
+        animate={{
+          y: [0, 80, 0],
+          scale: [
+            1,
+            1.12,
+            1,
+          ],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Main Container */}
+      <div
+        className="
+          max-w-7xl
+          mx-auto
+          md:px-6
+          relative
+          z-20
+        "
+      >
+
+        {/* Heading */}
         <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true, amount: 0.1 }}
-           transition={{ duration: 0.6 }}
-           className="text-center mb-16 md:mb-24"
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.1,
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+          className="
+            text-center
+            mb-16
+            md:mb-20
+          "
         >
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-4 md:mb-5 pb-2 tracking-tight text-white flex justify-center items-center gap-2 md:gap-3">
-             <span className="w-4 h-4 md:w-5 md:h-5 bg-cyan-400 rounded-sm animate-spin-slow shadow-[0_0_15px_rgba(0,200,255,0.6)]"></span>
-             Holographic <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Nexus</span>
-             <span className="w-4 h-4 md:w-5 md:h-5 bg-purple-500 rounded-sm animate-spin-slow shadow-[0_0_15px_rgba(168,85,247,0.6)]"></span>
+
+          <h2
+            className="
+              text-3xl
+              md:text-5xl
+              font-extrabold
+              mb-4
+              md:mb-5
+              pb-2
+              tracking-tight
+              text-white
+              flex
+              justify-center
+              items-center
+              gap-2
+              md:gap-3
+            "
+          >
+
+            {/* Left Animated Square */}
+            <motion.span
+              className="
+                w-4
+                h-4
+                md:w-5
+                md:h-5
+                bg-cyan-400
+                rounded-sm
+                shadow-[0_0_15px_rgba(0,200,255,0.8)]
+              "
+              animate={{
+                rotate: 360,
+                scale: [
+                  1,
+                  1.3,
+                  1,
+                ],
+              }}
+              transition={{
+                rotate: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                },
+              }}
+            />
+
+            Holographic
+
+            <span
+              className="
+                text-transparent
+                bg-clip-text
+                bg-gradient-to-r
+                from-cyan-400
+                via-blue-400
+                to-purple-500
+              "
+            >
+              Nexus
+            </span>
+
+            {/* Right Animated Square */}
+            <motion.span
+              className="
+                w-4
+                h-4
+                md:w-5
+                md:h-5
+                bg-purple-500
+                rounded-sm
+                shadow-[0_0_15px_rgba(168,85,247,0.8)]
+              "
+              animate={{
+                rotate: -360,
+                scale: [
+                  1,
+                  1.3,
+                  1,
+                ],
+              }}
+              transition={{
+                rotate: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                },
+              }}
+            />
           </h2>
-          <p className="text-cyan-100/50 max-w-2xl mx-auto text-[15px] md:text-lg font-light tracking-wide px-4">
-             Query our active services matrix and initialize new protocols.
+
+          <p
+            className="
+              text-cyan-100/50
+              max-w-2xl
+              mx-auto
+              text-[15px]
+              md:text-lg
+              font-light
+              tracking-wide
+              px-4
+            "
+          >
+            Explore our technology,
+            academic and innovation
+            services.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
-          {services.map((service, i) => (
-            <ServiceCard key={i} service={service} index={i} isMobile={isMobile} />
-          ))}
+        {/* Service Grid */}
+        <div
+          className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-6
+            md:gap-8
+          "
+        >
+          {services.map(
+            (service, i) => (
+              <ServiceCard
+                key={service.title}
+                service={service}
+                index={i}
+                isMobile={
+                  isMobile
+                }
+              />
+            )
+          )}
         </div>
       </div>
     </div>
