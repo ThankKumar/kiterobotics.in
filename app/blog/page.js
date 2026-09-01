@@ -1,20 +1,50 @@
+import Link from "next/link";
+import { Sparkles, CheckCircle2 } from "lucide-react";
+
 export const metadata = {
-  title: "Blog | KITE Robotics",
-  description: "History and stories from KITE Robotics.",
+  title: "Blog & History | KITE Robotics",
+  description: "History, innovation stories, and vision of KITE Robotics.",
 };
 
 export default function BlogPage() {
   return (
-    <section className="min-h-screen bg-[#050914] text-white py-24 px-6 lg:px-20">
+    <section 
+      className="min-h-screen py-28 px-6 lg:px-20 transition-colors duration-300"
+      style={{ backgroundColor: 'var(--background)', color: 'var(--text-primary)' }}
+    >
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-8 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-          History of KITE Robotics
+        <div className="flex flex-wrap justify-center sm:justify-start gap-3 mb-8">
+          <Link 
+            href="/" 
+            className="rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-wider hover:opacity-80 transition shadow-sm"
+            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
+          >
+            Home
+          </Link>
+          <Link 
+            href="/buy" 
+            className="rounded-full border px-5 py-2 text-xs font-bold uppercase tracking-wider hover:opacity-80 transition shadow-sm"
+            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
+          >
+            Store / Buy
+          </Link>
+        </div>
+
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-4 text-xs font-bold uppercase tracking-wider shadow-sm" style={{ borderColor: 'var(--primary-accent)', backgroundColor: 'var(--card-bg)', color: 'var(--primary-accent)' }}>
+          <Sparkles size={14} /> Our Journey & Vision
+        </div>
+
+        <h1 
+          className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tight"
+          style={{ color: 'var(--text-primary)' }}
+        >
+          History of <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-green-500 to-cyan-500">KITE Robotics</span>
         </h1>
 
-        <div className="space-y-8 text-gray-300 text-lg leading-8">
+        <div className="space-y-6 text-base sm:text-lg leading-relaxed font-light" style={{ color: 'var(--text-secondary)' }}>
           <p>
-            KITE Robotics began as a small team of technology enthusiasts with a shared vision: to make robotics education accessible to students, hobbyists, and makers across India.
-            The journey started with humble Arduino-based learning kits and quickly evolved into a wider portfolio of robotics, IoT, and AI learning solutions.
+            KITE Robotics began as a small team of technology enthusiasts and IIT mentors with a shared vision: to make high-impact robotics, AI, and IoT education accessible to students, hobbyists, and makers across India.
+            The journey started with humble Arduino-based learning kits and quickly evolved into a wider portfolio of robotics, IoT, and KMS-AI learning solutions.
           </p>
 
           <p>
@@ -25,12 +55,27 @@ export default function BlogPage() {
             Today, the brand stands for innovation, quality, and community. The KITE Robotics story is one of continuous iteration: building smarter kits, creating stronger learning experiences, and empowering a new generation of creators to build the future.
           </p>
 
-          <div className="rounded-3xl border border-blue-500/20 bg-[#071020] p-8 shadow-[0_20px_60px_rgba(15,23,42,0.55)]">
-            <h2 className="text-2xl font-semibold mb-4 text-white">Why KITE Robotics Matters</h2>
-            <ul className="space-y-3 text-gray-300 list-disc list-inside">
-              <li>Hands-on STEM learning with real hardware.</li>
-              <li>Practical kits designed for students and educators.</li>
-              <li>Fast-growing community support and learning resources.</li>
+          <div 
+            className="rounded-3xl border p-8 shadow-xl backdrop-blur-md transition-colors"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--card-border)'
+            }}
+          >
+            <h2 className="text-2xl font-bold mb-5" style={{ color: 'var(--text-primary)' }}>Why KITE Robotics Matters</h2>
+            <ul className="space-y-3.5 text-base">
+              <li className="flex items-center gap-3">
+                <CheckCircle2 size={18} className="text-orange-500 flex-shrink-0" />
+                <span>Hands-on STEM and Robotics learning with real hardware components.</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <CheckCircle2 size={18} className="text-green-500 flex-shrink-0" />
+                <span>Practical kits and curriculum designed by industry and academic mentors.</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <CheckCircle2 size={18} className="text-cyan-500 flex-shrink-0" />
+                <span>Integrated KMS-AI intelligence assistant for rapid troubleshooting and concept learning.</span>
+              </li>
             </ul>
           </div>
         </div>

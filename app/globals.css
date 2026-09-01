@@ -1,8 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #03060d; 
-  --foreground: #ffffff;
+  --background: #050816;
+  --foreground: #F8FAFC;
+  --surface: #0c1131;
+  --primary-accent: #FF7A00;
+  --secondary-accent: #22C55E;
+  --tertiary-accent: #06B6D4;
+  --primary-orange: #FF7A00;
+  --primary-green: #22C55E;
+  --primary-cyan: #06B6D4;
+  --body-text: #94A3B8;
+  --navbar-bg: rgba(5, 8, 22, 0.88);
+  --navbar-border: rgba(255, 122, 0, 0.2);
+  --card-bg: #0c1131;
+  --card-border: rgba(139, 92, 246, 0.12);
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --input-bg: #0c1131;
+  --input-border: rgba(255, 122, 0, 0.25);
+}
+
+/* Light mode */
+[data-theme="light"] {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --surface: #FFFFFF;
+  --primary-accent: #EA580C;
+  --secondary-accent: #16A34A;
+  --tertiary-accent: #0284C7;
+  --primary-orange: #EA580C;
+  --primary-green: #16A34A;
+  --primary-cyan: #0284C7;
+  --body-text: #334155;
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --navbar-border: rgba(234, 88, 12, 0.15);
+  --card-bg: #FFFFFF;
+  --card-border: rgba(0, 0, 0, 0.09);
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --input-bg: #FFFFFF;
+  --input-border: rgba(234, 88, 12, 0.3);
 }
 
 @theme inline {
@@ -11,15 +53,83 @@
   --font-sans: var(--font-inter);
 }
 
+/* ── Deep-space cosmic gradient (dark mode) ── */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: linear-gradient(180deg, #050816 0%, #0a0f2e 25%, #120a3c 50%, #1a1050 75%, #2d1b69 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  transition: background 0.5s ease, color 0.3s ease;
+  min-height: 100vh;
+  /* Global 3D camera context */
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+}
+
+/* Light mode: clean flat background */
+[data-theme="light"] body {
+  background: var(--background);
+  background-attachment: scroll;
+}
+
+/* ── Subtle grid overlay (dark mode only) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(139, 92, 246, 0.025) 25%, rgba(139, 92, 246, 0.025) 26%, transparent 27%, transparent 74%, rgba(255, 122, 0, 0.02) 75%, rgba(255, 122, 0, 0.02) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(6, 182, 212, 0.02) 25%, rgba(6, 182, 212, 0.02) 26%, transparent 27%, transparent 74%, rgba(139, 92, 246, 0.025) 75%, rgba(139, 92, 246, 0.025) 76%, transparent 77%, transparent);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Light mode grid texture */
+[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(234, 88, 12, 0.03) 25%, rgba(234, 88, 12, 0.03) 26%, transparent 27%, transparent 74%, rgba(22, 163, 74, 0.03) 75%, rgba(22, 163, 74, 0.03) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(2, 132, 199, 0.03) 25%, rgba(2, 132, 199, 0.03) 26%, transparent 27%, transparent 74%, rgba(234, 88, 12, 0.03) 75%, rgba(234, 88, 12, 0.03) 76%, transparent 77%, transparent);
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+/* ── Shooting Star / Meteor Animations ── */
+@keyframes shootingStar {
+  0% {
+    transform: translate(0, 0) rotate(-45deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  30% {
+    opacity: 0;
+    transform: translate(300px, 300px) rotate(-45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(300px, 300px) rotate(-45deg);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+@keyframes driftStar {
+  0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  25% { opacity: 0.6; }
+  50% { transform: translateY(-15px) translateX(8px); opacity: 0.3; }
+  75% { opacity: 0.7; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.2; }
 }
 
 /* Custom Scrollbar */
@@ -27,18 +137,21 @@ html {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #03060d;
+  background: #050816;
+}
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e3a8a;
+  background: linear-gradient(180deg, var(--primary-accent), var(--secondary-accent));
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6;
+  background: var(--primary-accent);
 }
 
 ::selection {
-  background-color: rgba(59, 130, 246, 0.5);
+  background-color: rgba(255, 122, 0, 0.4);
   color: #fff;
 }
 
@@ -53,7 +166,7 @@ html {
 
 .animate-scanline {
   animation: scanline 4s linear infinite;
-  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(255, 122, 0, 0.3), transparent);
 }
 
 .animate-spin-slow {
@@ -65,4 +178,11 @@ html {
   transform-style: preserve-3d;
 }
 
-
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -51,16 +51,17 @@ export default function CustomCursor() {
     <>
       {/* Outer Glow Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border-2 border-blue-400 rounded-full pointer-events-none z-[10000] mix-blend-screen shadow-[0_0_10px_rgba(96,165,250,0.6)]"
+        className="fixed top-0 left-0 w-8 h-8 border-2 rounded-full pointer-events-none z-[10000] mix-blend-screen"
         style={{ x: springX, y: springY }}
         animate={{
           scale: isHovering ? 1.6 : 1,
-          borderColor: isHovering ? "#3b82f6" : "#60a5fa",
-          backgroundColor: isHovering ? "rgba(59,130,246,0.1)" : "transparent"
+          borderColor: isHovering ? "#FF7A00" : "#22C55E",
+          backgroundColor: isHovering ? "rgba(255,122,0,0.15)" : "transparent",
+          boxShadow: isHovering ? "0 0 15px rgba(255,122,0,0.6)" : "0 0 8px rgba(34,197,94,0.4)"
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
       </motion.div>
     </>
   );

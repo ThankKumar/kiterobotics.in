@@ -1,4 +1,4 @@
-﻿// // "use client";
+// // "use client";
 // // import { motion } from "framer-motion";
 // // import { Cpu, Bot, Wifi, Activity, BrainCircuit } from "lucide-react";
 
@@ -839,7 +839,7 @@ function ProductVisual({ type }) {
         }}
       >
         <div className="brain-core">
-          <BrainCircuit size={50} />
+          {/* Duplicate icon removed */}
         </div>
 
         {Array.from({ length: 12 }).map((_, i) => {
@@ -879,178 +879,155 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="relative py-24 overflow-hidden bg-[#01030a] text-white"
+      className="relative py-12 sm:py-16 overflow-hidden transition-colors duration-300"
+      style={{
+        backgroundColor: 'var(--background)',
+        color: 'var(--text-primary)'
+      }}
     >
       {/* Background Decor */}
-
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-600/10 blur-[120px] rounded-full" />
-
-        <div className="absolute bottom-10 right-10 w-72 h-72 bg-indigo-600/10 blur-[120px] rounded-full" />
-
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-600/5 blur-[150px] rounded-full" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/10 blur-[130px] rounded-full" />
+        <div className="absolute bottom-10 right-10 w-72 h-72 bg-green-500/10 blur-[130px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/5 blur-[150px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
 
         {/* Heading */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold">
-            <ShoppingCart size={16} />
-            Explore Our Products
+          <div 
+            className="inline-flex items-center gap-2 px-4 py-2 mb-5 rounded-full border text-xs font-bold uppercase tracking-wider shadow-sm"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--primary-accent)',
+              color: 'var(--primary-accent)'
+            }}
+          >
+            <ShoppingCart size={15} />
+            Genuine Hardware & Robotics Kits
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 pb-2 tracking-tight">
+          <h2 
+            className="text-4xl md:text-5xl font-black mb-4 pb-2 tracking-tight"
+            style={{ color: 'var(--text-primary)' }}
+          >
             Our{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-green-500 to-cyan-500">
               Robotics
             </span>{" "}
             Products
           </h2>
 
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            High-performance hardware for your next big innovation.
+          <p 
+            className="max-w-2xl mx-auto text-base sm:text-lg font-light"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            High-performance hardware, microcontrollers and kits for your next big innovation.
           </p>
         </motion.div>
 
         {/* Products Grid */}
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-
           {products.map((product, idx) => (
             <motion.div
               key={product.type}
-              initial={{
-                opacity: 0,
-                y: 40,
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="product-card group relative rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 border backdrop-blur-md"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderColor: 'var(--card-border)',
+                boxShadow: 'var(--card-shadow)'
               }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.5,
-                delay: idx * 0.1,
-              }}
-              whileHover={{
-                y: -10,
-                scale: 1.02,
-              }}
-              className="product-card group relative bg-[#0a101f] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300"
             >
-
               {/* Glow Border */}
-
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-500/50 transition-colors duration-300 pointer-events-none group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]" />
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-orange-500/50 transition-colors duration-300 pointer-events-none group-hover:shadow-[0_0_25px_rgba(255,122,0,0.2)]" />
 
               {/* 3D Product */}
-
               <ProductVisual type={product.type} />
 
               {/* Icon */}
-
-              <div className="product-icon">
+              <div 
+                className="product-icon p-2 rounded-xl mb-3 border"
+                style={{
+                  backgroundColor: 'var(--card-bg)',
+                  borderColor: 'var(--card-border)',
+                  color: 'var(--primary-accent)'
+                }}
+              >
                 {product.icon}
               </div>
 
               {/* Title */}
-
-              <h3 className="text-xl font-bold mb-3 text-gray-100 group-hover:text-blue-400 transition-colors relative z-10">
+              <h3 
+                className="text-lg font-bold mb-2 transition-colors relative z-10"
+                style={{ color: 'var(--text-primary)' }}
+              >
                 {product.title}
               </h3>
 
               {/* Description */}
-
-              <p className="text-sm text-gray-400 mb-6 flex-1 relative z-10">
+              <p 
+                className="text-xs mb-6 flex-1 relative z-10 leading-relaxed font-light"
+                style={{ color: 'var(--text-secondary)' }}
+              >
                 {product.desc}
               </p>
 
               {/* Buttons */}
-
-              <div className="w-full flex flex-col gap-3 relative z-10">
-
-                {/* View Details */}
-
-                <Link
-                  href={product.buyLink}
-                  className="group/details flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg bg-[#141d33] border border-gray-700 text-sm font-semibold text-gray-200 hover:bg-[#1b2740] hover:border-blue-500/50 transition-all duration-300"
-                >
-                  View Details
-                  <ArrowRight
-                    size={16}
-                    className="group-hover/details:translate-x-1 transition-transform"
-                  />
-                </Link>
-
+              <div className="w-full flex flex-col gap-2.5 relative z-10">
                 {/* BUY NOW */}
-
                 <Link
                   href={`/buy?product=${product.type}`}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 w-full rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 border border-blue-500 text-sm font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)] hover:from-blue-500 hover:to-indigo-500 transition-all duration-300"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 w-full rounded-xl text-xs font-black uppercase tracking-wider text-white shadow-md transition-transform active:scale-95 cursor-pointer"
+                  style={{
+                    background: 'linear-gradient(135deg, #FF7A00 0%, #22C55E 100%)',
+                    boxShadow: '0 4px 15px rgba(255, 122, 0, 0.25)'
+                  }}
                 >
-                  <ShoppingCart size={17} />
+                  <ShoppingCart size={15} />
                   Buy Now
                 </Link>
-
               </div>
             </motion.div>
           ))}
-
         </div>
 
         {/* Bottom CTA */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.3,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-14 text-center"
         >
-          <p className="text-gray-500 text-sm mb-4">
-            Looking for a custom robotics solution?
+          <p className="text-sm mb-4 font-light" style={{ color: 'var(--text-secondary)' }}>
+            Looking for a custom robotics solution or lab setup?
           </p>
 
           <a
-            href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-700 bg-[#0a101f] text-gray-200 font-semibold hover:border-blue-500 hover:text-blue-400 transition-all duration-300"
+            href="/#contact"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-sm cursor-pointer hover:scale-105"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--primary-accent)',
+              color: 'var(--text-primary)'
+            }}
           >
-            Contact Our Team
-            <ArrowRight size={18} />
+            Contact Our Mentors
+            <ArrowRight size={16} className="text-orange-500" />
           </a>
         </motion.div>
-
       </div>
     </section>
   );

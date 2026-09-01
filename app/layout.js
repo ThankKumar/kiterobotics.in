@@ -1,7 +1,6 @@
 
 
 
-
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -12,10 +11,9 @@ import About from "./components/About";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import FloatingRobot from "./components/FloatingRobot";
 import CustomCursor from "./components/CustomCursor";
 import AskKite from "./components/AskKite";
-import RainBackground from "./components/RainBackground";
+import StarField from "./components/StarField";
 
 // Fonts
 const inter = Inter({
@@ -32,30 +30,43 @@ export const metadata = {
 // Layout
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} antialiased bg-[#050914] text-white`}>
+    <html lang="en">
+      <body className={`${inter.variable} antialiased`} style={{ backgroundColor: 'var(--background)', color: 'var(--text-primary)', margin: 0, padding: 0, overflow: 'hidden' }}>
+
+        {/* ✨ Cosmic Star Field (dark mode only) */}
+        <StarField />
 
         {/* Custom Glowing Cursor */}
         <CustomCursor />
 
-        {/* 🤖 FLOATING ROBOT (VISIBLE EVERYWHERE) */}
-        <FloatingRobot />
-
         {/* 🤖 ASK KITE CHATBOT */}
         <AskKite />
 
-        {/* Global Navbar */}
+        {/* Global Navbar - Fixed at top */}
         <Navbar />
 
-        {/* Rain Background */}
-        <RainBackground />
-
-        {/* Page Content */}
-        <main>{children}</main>
+        {/* Scrollable Content Container */}
+        <div style={{ 
+          position: 'fixed',
+          top: '60px',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          zIndex: 1
+        }}>
+          {/* Page Content */}
+          <main style={{ position: 'relative', zIndex: 2 }}>
+            {children}
+          </main>
+        </div>
 
       </body>
     </html>
   );
 }
+
+
 
 

@@ -1,56 +1,17 @@
 
-
-
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon, Sparkles, Bot } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import SignupModal from "./SignupModal";
-
-const WHATSAPP_LINK =
-  "https://api.whatsapp.com/send/?phone=919564866985&text=Hello+Sir%2C+I+am+contacting+you+via+WhatsApp&type=phone_number&app_absent=0";
-
-function OfferBar() {
-  const [timeLeft, setTimeLeft] = useState(5 * 24 * 60 * 60);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const days = Math.floor(timeLeft / (24 * 60 * 60));
-  const hours = Math.floor((timeLeft % (24 * 60 * 60)) / 3600);
-  const minutes = Math.floor((timeLeft % 3600) / 60);
-  const seconds = timeLeft % 60;
-
-  return (
-    <div className="fixed top-0 left-0 w-full z-[100] bg-[#050914]/80 backdrop-blur-md border-b border-blue-500/20 text-blue-100 overflow-hidden">
-      <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: "-100%" }}
-        transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        className="whitespace-nowrap py-1.5 text-xs md:text-sm font-medium tracking-wider flex items-center gap-3"
-      >
-        <span className="flex h-2 w-2 relative">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-        </span>
-        SYSTEM PROTOCOL ONLINE — 🎉 Limited Offer Ends In: {days}d {hours}h {minutes}m {seconds}s — Establish Connection Now at KITE ROBOTICS 🚀 | +91 95648 66985
-      </motion.div>
-    </div>
-  );
-}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState("dark");
+  const [mounted, setMounted] = useState(false);
 
   const sections = ["home", "services", "products", "about", "contact"];
   const navItems = [
@@ -61,8 +22,27 @@ export default function Navbar() {
     { label: "blog", href: "/blog", type: "page" },
     { label: "buy", href: "/buy", type: "page" },
     { label: "careers", href: "https://kiterobotic-career.vercel.app/careers", type: "external" },
-    { label: "contact", href: "/#contact", type: "page" },
   ];
+
+  // Initialize theme from localStorage
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  // Toggle theme function
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
+  const handleOpenKmsAi = () => {
+    window.dispatchEvent(new CustomEvent("open-kms-ai"));
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,52 +64,53 @@ export default function Navbar() {
 
   return (
     <>
-      <OfferBar />
-      <SignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-      {/* Floating Fast-Connect Button */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="fixed right-6 bottom-6 z-[90] px-5 py-2.5 rounded-full text-blue-400 font-bold border border-blue-500/50 bg-[#0a101f]/80 backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] hover:bg-blue-600 hover:text-white transition-all duration-300 group overflow-hidden"
-      >
-        <span className="relative z-10 flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-300 group-hover:bg-white animate-pulse"></div>
-          Connect
-        </span>
-        <div className="absolute inset-0 bg-blue-500/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-      </button>
-
-      <motion.nav
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className={`fixed w-full top-8 left-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? "bg-[#050914]/80 backdrop-blur-lg border-b border-blue-500/20 shadow-[0_4px_30px_rgba(0,0,0,0.5)] py-2" 
-            : "bg-transparent py-4"
+      {/* Fixed Navbar - Always Visible */}
+      <nav
+        className={`fixed w-full top-0 left-0 transition-all duration-300 ${
+          scrolled ? "py-2 shadow-md" : "py-3"
         }`}
+        style={{
+          backgroundColor: 'var(--navbar-bg)',
+          borderBottom: `1px solid var(--navbar-border)`,
+          backdropFilter: 'blur(16px)',
+          zIndex: 9999,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          visibility: 'visible',
+          opacity: 1,
+          transform: 'translateZ(0)',
+          willChange: 'auto',
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
 
             {/* Logo */}
-            <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-[2px] rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.8)] transition-shadow">
+            <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+              <div className="p-[2px] rounded-full bg-gradient-to-tr from-[#FF7A00] via-[#22C55E] to-[#06B6D4] shadow-sm shadow-orange-500/20 group-hover:scale-105 transition-transform">
                 <Image
                   src="/kite_logo.jpg"
                   alt="KITE Robotics Logo"
-                  width={44}
-                  height={44}
-                  className="rounded-full bg-white"
+                  width={42}
+                  height={42}
+                  className="rounded-full bg-white object-contain"
+                  priority
                 />
               </div>
-              <span className="text-xl font-bold text-white tracking-widest group-hover:text-blue-400 transition-colors">
-                KITE<span className="text-blue-500">ROBOTICS</span>
-              </span>
-            </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-black tracking-widest leading-tight transition-colors" style={{color: 'var(--text-primary)'}}>
+                  KITE<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-500">ROBOTICS</span>
+                </span>
+                <span className="text-[9px] uppercase tracking-widest font-semibold opacity-70" style={{color: 'var(--text-secondary)'}}>
+                  Robotics • AI • IoT
+                </span>
+              </div>
+            </Link>
 
             {/* Desktop Menu */}
-            <ul className="hidden md:flex items-center space-x-8 font-medium">
+            <ul className="hidden md:flex items-center space-x-7 font-medium">
               {navItems.map((item) => (
                 <li key={item.label}>
                   {item.type === "external" ? (
@@ -137,61 +118,104 @@ export default function Navbar() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
-                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
-                      }`}
+                      className={`relative text-xs uppercase tracking-wider font-semibold transition-all py-1.5 hover:text-orange-400`}
+                      style={{
+                        color: activeSection === item.label ? 'var(--primary-accent)' : 'var(--text-secondary)'
+                      }}
                     >
                       {item.label}
                     </a>
                   ) : (
                     <Link
                       href={item.href}
-                      className={`relative text-sm uppercase tracking-wider transition-colors py-2 ${
-                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
-                      }`}
+                      className={`relative text-xs uppercase tracking-wider font-semibold transition-all py-1.5 hover:text-orange-400`}
+                      style={{
+                        color: activeSection === item.label ? 'var(--primary-accent)' : 'var(--text-secondary)'
+                      }}
                     >
                       {item.label}
                       {activeSection === item.label && (
-                        <motion.div
-                          layoutId="nav-underline"
-                          className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
+                        <div className="absolute left-0 bottom-0 w-full h-[2px] rounded-full bg-gradient-to-r from-orange-500 to-green-500"></div>
                       )}
                     </Link>
                   )}
                 </li>
               ))}
 
+              {/* Theme Toggle */}
               <li>
                 <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-5 py-2 text-sm uppercase tracking-wider rounded-full font-bold border border-blue-500 text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-[0_0_10px_rgba(59,130,246,0.2)] hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+                  onClick={toggleTheme}
+                  className="p-2 rounded-lg border border-transparent hover:border-orange-500/30 hover:bg-orange-500/10 transition-all cursor-pointer"
+                  aria-label="Toggle theme"
+                  style={{color: 'var(--text-primary)'}}
                 >
-                  Sign Up
+                  {mounted && theme === "dark" ? (
+                    <Sun size={19} className="text-orange-400 hover:rotate-45 transition-transform" />
+                  ) : (
+                    <Moon size={19} className="text-orange-600 hover:-rotate-12 transition-transform" />
+                  )}
+                </button>
+              </li>
+
+              {/* KMS-AI Button */}
+              <li>
+                <button
+                  onClick={handleOpenKmsAi}
+                  className="relative px-5 py-2 text-xs uppercase tracking-widest rounded-full font-black border transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer shadow-md group overflow-hidden"
+                  style={{
+                    borderColor: 'var(--primary-accent)',
+                    backgroundColor: 'var(--card-bg)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-green-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <Sparkles size={14} className="text-orange-400 animate-spin-slow" />
+                  <span className="bg-gradient-to-r from-orange-400 via-green-400 to-cyan-400 bg-clip-text text-transparent font-black">
+                    KMS-AI
+                  </span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                 </button>
               </li>
             </ul>
 
-            {/* Mobile Button */}
-            <button
-              className="md:hidden text-gray-200 hover:text-blue-400 transition-colors"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+            {/* Mobile Actions */}
+            <div className="flex items-center gap-2 md:hidden">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg"
+                aria-label="Toggle theme"
+                style={{color: 'var(--text-primary)'}}
+              >
+                {mounted && theme === "dark" ? (
+                  <Sun size={20} className="text-orange-400" />
+                ) : (
+                  <Moon size={20} className="text-orange-600" />
+                )}
+              </button>
+
+              <button
+                className="p-2 hover:opacity-80 transition-colors"
+                onClick={() => setIsOpen(!isOpen)}
+                style={{color: 'var(--text-primary)'}}
+                aria-label="Toggle navigation menu"
+              >
+                {isOpen ? <X size={26} /> : <Menu size={26} />}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#050914]/95 backdrop-blur-xl border-t border-blue-500/20 mt-2 overflow-hidden"
+          <div
+            className="md:hidden backdrop-blur-xl mt-2 overflow-hidden shadow-2xl transition-all"
+            style={{
+              backgroundColor: 'var(--navbar-bg)',
+              borderTop: `1px solid var(--navbar-border)`
+            }}
           >
-            <ul className="flex flex-col py-6 space-y-6 px-6">
+            <ul className="flex flex-col py-5 space-y-4 px-6">
               {navItems.map((item) => (
                 <li key={item.label}>
                   {item.type === "external" ? (
@@ -200,9 +224,10 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className={`block text-lg uppercase tracking-wider font-semibold ${
-                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
-                      }`}
+                      className={`block text-base uppercase tracking-wider font-semibold transition-colors`}
+                      style={{
+                        color: activeSection === item.label ? 'var(--primary-accent)' : 'var(--text-secondary)'
+                      }}
                     >
                       {item.label}
                     </a>
@@ -210,9 +235,10 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`block text-lg uppercase tracking-wider font-semibold ${
-                        activeSection === item.label ? "text-blue-400" : "text-gray-300 hover:text-white"
-                      }`}
+                      className={`block text-base uppercase tracking-wider font-semibold transition-colors`}
+                      style={{
+                        color: activeSection === item.label ? 'var(--primary-accent)' : 'var(--text-secondary)'
+                      }}
                     >
                       {item.label}
                     </Link>
@@ -220,21 +246,26 @@ export default function Navbar() {
                 </li>
               ))}
 
-              <li>
+              {/* KMS-AI Mobile Button */}
+              <li className="pt-2">
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    setIsModalOpen(true);
+                    handleOpenKmsAi();
                   }}
-                  className="w-full px-6 py-3 rounded-xl bg-blue-600 text-white font-bold text-center tracking-wider hover:bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+                  className="w-full px-6 py-3.5 rounded-xl font-black text-center tracking-widest uppercase flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95 cursor-pointer text-white"
+                  style={{
+                    background: 'linear-gradient(135deg, #FF7A00 0%, #22C55E 50%, #06B6D4 100%)'
+                  }}
                 >
-                  SIGN UP PROTOCOL
+                  <Bot size={20} />
+                  <span>LAUNCH KMS-AI</span>
                 </button>
               </li>
             </ul>
-          </motion.div>
+          </div>
         )}
-      </motion.nav>
+      </nav>
     </>
   );
 }

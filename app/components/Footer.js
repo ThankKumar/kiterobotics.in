@@ -1,11 +1,23 @@
 "use client";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Phone, Mail } from "lucide-react";
+import { MessageCircle, MapPin, Phone, Mail, Bot } from "lucide-react";
 import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Footer() {
+  const handleOpenKmsAi = () => {
+    window.dispatchEvent(new CustomEvent("open-kms-ai"));
+  };
+
   return (
-    <footer className="bg-[#02040a] text-gray-400 py-16 px-6 border-t border-blue-900/30">
+    <footer 
+      className="py-16 px-6 border-t transition-colors duration-300"
+      style={{
+        backgroundColor: 'var(--background)',
+        borderColor: 'var(--navbar-border)',
+        color: 'var(--text-secondary)'
+      }}
+    >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12 text-center md:text-left relative z-10 w-full">
 
         {/* Brand + Logo */}
@@ -17,14 +29,9 @@ export default function Footer() {
           className="flex flex-col items-center md:items-start col-span-1 md:col-span-2 pr-0 md:pr-10"
         >
           <a href="#home" className="relative inline-block group mb-6">
-            <motion.div
-              className="absolute inset-0 rounded-2xl blur-[15px] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="relative p-[2px] rounded-2xl bg-[#0a101f] border border-blue-900/50 shadow-xl group-hover:border-blue-500 transition-colors">
+            <div className="relative p-[2px] rounded-2xl bg-gradient-to-r from-orange-500 via-green-500 to-cyan-500 shadow-md">
               <div className="bg-white rounded-xl p-2 px-3">
-                <img
+                <Image
                   src="/kite_logo.jpg"
                   alt="KITE Robotics Logo"
                   width={120}
@@ -36,10 +43,13 @@ export default function Footer() {
           </a>
 
           <div>
-            <h2 className="text-2xl font-extrabold text-white tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
-              KITE ROBOTICS
+            <h2 
+              className="text-2xl font-black tracking-widest uppercase"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              KITE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-500">ROBOTICS</span>
             </h2>
-            <p className="mt-4 text-gray-500 text-sm leading-relaxed font-light">
+            <p className="mt-3 text-sm leading-relaxed font-light" style={{ color: 'var(--text-secondary)' }}>
               Empowering Innovation with Robotics, AI & IoT. <br/>
               Built and Operated by IIT Talent.
             </p>
@@ -53,11 +63,11 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Headquarters</h3>
+          <h3 className="text-xs font-bold mb-5 uppercase tracking-widest" style={{ color: 'var(--text-primary)' }}>Headquarters</h3>
           <ul className="space-y-3 text-sm font-light">
             {['Bihar', 'Chennai', 'Hyderabad', 'Mumbai', 'Kolkata'].map((loc, idx) => (
-              <li key={idx} className="flex items-center gap-3 text-gray-400">
-                <MapPin className="w-4 h-4 text-blue-500" /> {loc}
+              <li key={idx} className="flex items-center gap-2.5 justify-center md:justify-start" style={{ color: 'var(--text-secondary)' }}>
+                <MapPin className="w-4 h-4 text-orange-500" /> {loc}
               </li>
             ))}
           </ul>
@@ -70,19 +80,34 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Contact Stream</h3>
+          <h3 className="text-xs font-bold mb-5 uppercase tracking-widest" style={{ color: 'var(--text-primary)' }}>Contact Stream</h3>
           <ul className="space-y-4 text-sm font-light">
-            <li className="flex items-center gap-3 text-gray-400">
-              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><Phone className="w-4 h-4 text-cyan-400" /></div>
-              +91 956 8466 985
+            <li className="flex items-center gap-3 justify-center md:justify-start" style={{ color: 'var(--text-secondary)' }}>
+              <div 
+                className="w-8 h-8 rounded-full border flex flex-shrink-0 items-center justify-center shadow-sm"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
+              >
+                <Phone className="w-4 h-4 text-orange-500" />
+              </div>
+              +91 95648 66985
             </li>
-            <li className="flex items-center gap-3 text-gray-400 break-all text-left">
-              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><Mail className="w-4 h-4 text-cyan-400" /></div>
-              gm.kiterobotics@gmail.com
+            <li className="flex items-center gap-3 justify-center md:justify-start break-all text-left" style={{ color: 'var(--text-secondary)' }}>
+              <div 
+                className="w-8 h-8 rounded-full border flex flex-shrink-0 items-center justify-center shadow-sm"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
+              >
+                <Mail className="w-4 h-4 text-cyan-500" />
+              </div>
+              info@kiterobotics.in
             </li>
-            <li className="flex items-center gap-3 text-gray-400">
-              <div className="w-8 h-8 rounded-full bg-[#0a101f] border border-blue-900/50 flex flex-shrink-0 items-center justify-center"><MessageCircle className="w-4 h-4 text-green-400" /></div>
-              +91 956 8466 985
+            <li className="flex items-center gap-3 justify-center md:justify-start" style={{ color: 'var(--text-secondary)' }}>
+              <div 
+                className="w-8 h-8 rounded-full border flex flex-shrink-0 items-center justify-center shadow-sm"
+                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
+              >
+                <MessageCircle className="w-4 h-4 text-green-500" />
+              </div>
+              +91 95648 66985
             </li>
           </ul>
         </motion.div>
@@ -94,29 +119,31 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-widest">Grid Links</h3>
-          <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
-            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7409878807303598080" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaLinkedin size={18}/></a>
-            <a href="https://www.facebook.com/share/14Ua5eeJSi2/" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaFacebook size={18}/></a>
-            <a href="https://www.instagram.com/robotics_kite/" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaInstagram size={18}/></a>
-            <a href="https://x.com/RoboticsKite" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaTwitter size={18}/></a>
-            <a href="https://github.com/roboticskite" className="w-10 h-10 rounded-full border border-blue-900/50 bg-[#0a101f] flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"><FaGithub size={18}/></a>
+          <h3 className="text-xs font-bold mb-5 uppercase tracking-widest" style={{ color: 'var(--text-primary)' }}>Network Nodes</h3>
+          <div className="flex flex-wrap gap-2.5 justify-center md:justify-start mb-6">
+            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7409878807303598080" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl border flex items-center justify-center hover:scale-110 transition-all" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}><FaLinkedin size={16}/></a>
+            <a href="https://www.facebook.com/share/14Ua5eeJSi2/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl border flex items-center justify-center hover:scale-110 transition-all" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}><FaFacebook size={16}/></a>
+            <a href="https://www.instagram.com/robotics_kite/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl border flex items-center justify-center hover:scale-110 transition-all" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}><FaInstagram size={16}/></a>
+            <a href="https://x.com/RoboticsKite" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl border flex items-center justify-center hover:scale-110 transition-all" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}><FaTwitter size={16}/></a>
+            <a href="https://github.com/roboticskite" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-xl border flex items-center justify-center hover:scale-110 transition-all" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}><FaGithub size={16}/></a>
           </div>
 
-          <ul className="flex flex-wrap gap-4 justify-center md:justify-start text-sm font-light text-gray-500">
-            <li><a href="#home" className="hover:text-blue-400 transition-colors">Home</a></li>
-            <li><a href="#about" className="hover:text-blue-400 transition-colors">About</a></li>
-            <li><a href="#services" className="hover:text-blue-400 transition-colors">Services</a></li>
-            <li><a href="#faq" className="hover:text-blue-400 transition-colors">FAQ</a></li>
+          <ul className="flex flex-wrap gap-3.5 justify-center md:justify-start text-xs font-semibold uppercase tracking-wider">
+            <li><a href="#home" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>Home</a></li>
+            <li><a href="#about" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>About</a></li>
+            <li><a href="#services" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>Services</a></li>
+            <li><a href="#faq" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>FAQ</a></li>
+            <li><button onClick={handleOpenKmsAi} className="hover:text-green-500 transition-colors cursor-pointer text-orange-500 font-bold flex items-center gap-1"><Bot size={12} /> KMS-AI</button></li>
           </ul>
         </motion.div>
 
       </div>
 
       {/* Bottom Legal */}
-      <div className="text-center text-xs text-gray-600 mt-16 border-t border-blue-900/20 pt-6">
-        © {new Date().getFullYear()} KITE ROBOTICS. All rights reserved.<br />
-        <span className="mt-1 inline-block opacity-50">System architecture supported by AI protocols.</span>
+      <div className="text-center text-xs mt-12 border-t pt-6 pb-2 transition-colors flex flex-col gap-2" style={{ borderColor: 'var(--navbar-border)', color: 'var(--text-muted)' }}>
+        <p className="font-semibold text-gray-400">PAN: AAMCK9318G &nbsp;|&nbsp; TAN: PTNK05972B &nbsp;|&nbsp; CIN: U85499BR2026PTC085389</p>
+        <p>www.kiterobotics.in &nbsp;|&nbsp; +91 95648 66985 &nbsp;|&nbsp; info@kiterobotics.in</p>
+        <p>© {new Date().getFullYear()} KITE ROBOTICS. All rights reserved. • Powered by <span className="font-bold text-orange-500">KMS-AI</span> Intelligence.</p>
       </div>
     </footer>
   );
