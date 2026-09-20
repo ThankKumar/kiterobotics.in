@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Careers | KITE Robotics",
@@ -25,6 +26,7 @@ export default function CareersPage() {
   ];
 
   return (
+    <>
     <section className="min-h-screen bg-[#050914] text-white py-24 px-6 lg:px-20">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap justify-center gap-3 mb-10">
@@ -62,5 +64,7 @@ export default function CareersPage() {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
   );
 }

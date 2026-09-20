@@ -185,7 +185,7 @@ export default function Hero() {
         >
           <span className="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
           <span className="bg-gradient-to-r from-orange-400 via-green-400 to-cyan-400 bg-clip-text text-transparent font-black">
-            KMS-AI &amp; Next-Gen Robotics Ecosystem
+            KMS-AI & Next-Gen Robotics Ecosystem
           </span>
           <Sparkles size={13} className="text-orange-400" />
         </div>

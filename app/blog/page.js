@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Sparkles, CheckCircle2 } from "lucide-react";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Blog & History | KITE Robotics",
@@ -8,6 +9,7 @@ export const metadata = {
 
 export default function BlogPage() {
   return (
+    <>
     <section 
       className="min-h-screen py-28 px-6 lg:px-20 transition-colors duration-300"
       style={{ backgroundColor: 'var(--background)', color: 'var(--text-primary)' }}
@@ -81,5 +83,7 @@ export default function BlogPage() {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
   );
 }

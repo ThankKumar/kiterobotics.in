@@ -45,22 +45,25 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    const scrollContainer = document.getElementById("scrollable-container");
+    if (!scrollContainer) return;
+
     const handleScroll = () => {
       let current = "home";
       sections.forEach((id) => {
         const section = document.getElementById(id);
         if (section) {
           const offsetTop = section.offsetTop - 100;
-          if (window.scrollY >= offsetTop) current = id;
+          if (scrollContainer.scrollTop >= offsetTop) current = id;
         }
       });
       setActiveSection(current);
-      setScrolled(window.scrollY > 50);
+      setScrolled(scrollContainer.scrollTop > 50);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, [sections]);
 
   return (
     <>
@@ -80,8 +83,7 @@ export default function Navbar() {
           right: 0,
           visibility: 'visible',
           opacity: 1,
-          transform: 'translateZ(0)',
-          willChange: 'auto',
+          pointerEvents: 'auto',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

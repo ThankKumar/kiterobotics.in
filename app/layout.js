@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 import AskKite from "./components/AskKite";
 import StarField from "./components/StarField";
+import AiEcosystemTicker from "./components/AiEcosystemTicker";
 
 // Fonts
 const inter = Inter({
@@ -44,11 +45,12 @@ export default function RootLayout({ children }) {
 
         {/* Global Navbar - Fixed at top */}
         <Navbar />
+        <AiEcosystemTicker />
 
         {/* Scrollable Content Container */}
-        <div style={{ 
+        <div id="scrollable-container" style={{ 
           position: 'fixed',
-          top: '60px',
+          top: '126px',
           left: 0,
           right: 0,
           bottom: 0,

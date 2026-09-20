@@ -173,6 +173,140 @@ html {
   animation: spin 8s linear infinite;
 }
 
+/* ── KMS-AI ecosystem ticker ── */
+.ai-ecosystem-ticker {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 48px;
+  padding: 7px max(16px, calc((100vw - 1280px) / 2));
+  overflow: hidden;
+  border-bottom: 1px solid var(--navbar-border);
+  background: color-mix(in srgb, var(--navbar-bg) 92%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.ai-ecosystem-heading {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ai-ecosystem-heading-muted {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.ai-ecosystem-heading-divider {
+  color: var(--primary-accent);
+}
+
+.ai-ecosystem-live-dot,
+.ai-ecosystem-tool-dot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--secondary-accent);
+  box-shadow: 0 0 10px var(--secondary-accent);
+}
+
+.ai-ecosystem-window {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.ai-ecosystem-track {
+  display: flex;
+  width: max-content;
+  animation: ecosystemSlide 24s linear infinite;
+}
+
+.ai-ecosystem-tool-set {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+.ai-ecosystem-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-bg) 78%, transparent);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.ai-ecosystem-tool:hover,
+.ai-ecosystem-tool:focus-visible {
+  border-color: var(--primary-accent);
+  background: color-mix(in srgb, var(--primary-accent) 14%, var(--card-bg));
+  color: var(--text-primary);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.ai-ecosystem-tool:hover .ai-ecosystem-tool-dot,
+.ai-ecosystem-tool:focus-visible .ai-ecosystem-tool-dot {
+  background: var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-accent);
+}
+
+.ai-ecosystem-ticker:hover .ai-ecosystem-track,
+.ai-ecosystem-ticker:focus-within .ai-ecosystem-track {
+  animation-play-state: paused;
+}
+
+@keyframes ecosystemSlide {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+  .ai-ecosystem-ticker {
+    top: 72px;
+    gap: 16px;
+    min-height: 44px;
+    padding: 6px 12px;
+  }
+
+  .ai-ecosystem-heading-muted,
+  .ai-ecosystem-heading-divider {
+    display: none;
+  }
+
+  .ai-ecosystem-heading {
+    gap: 6px;
+    font-size: 9px;
+  }
+}
+
 /* 3D Transform Utils */
 .transform-style-3d {
   transform-style: preserve-3d;

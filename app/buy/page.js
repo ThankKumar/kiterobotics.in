@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShoppingCart, Check } from "lucide-react";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Buy Robotics Kits | KITE Robotics",
@@ -33,6 +34,7 @@ export default function BuyPage() {
   ];
 
   return (
+    <>
     <section 
       className="min-h-screen py-28 px-6 lg:px-20 transition-colors duration-300"
       style={{ backgroundColor: 'var(--background)', color: 'var(--text-primary)' }}
@@ -129,5 +131,7 @@ export default function BuyPage() {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
   );
 }
