@@ -163,7 +163,7 @@ export default function Navbar() {
               {/* KMS-AI Button */}
               <li>
                 <button
-                  onClick={handleOpenKmsAi}
+                  onClick={() => window.location.href = "https://kms-ai-live.vercel.app"}
                   className="relative px-5 py-2 text-xs uppercase tracking-widest rounded-full font-black border transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer shadow-md group overflow-hidden"
                   style={{
                     borderColor: 'var(--primary-accent)',
@@ -253,7 +253,7 @@ export default function Navbar() {
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    handleOpenKmsAi();
+                    window.location.href = "https://kms-ai-live.vercel.app";
                   }}
                   className="w-full px-6 py-3.5 rounded-xl font-black text-center tracking-widest uppercase flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95 cursor-pointer text-white"
                   style={{
