@@ -3,22 +3,134 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon, Sparkles, Bot } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+// ── Animated Light/Dark Mode Switcher ──
+function ThemeToggle({ theme, toggleTheme, mounted, size = "md" }) {
+  const isDark = theme === "dark";
+  const isSmall = size === "sm";
+
+  const trackW = isSmall ? 52 : 58;
+  const trackH = isSmall ? 28 : 30;
+  const thumbSize = isSmall ? 20 : 22;
+  const slideX = isSmall ? 24 : 28;
+
+  return (
+    <motion.button
+      type="button"
+      onClick={toggleTheme}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.92 }}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="relative flex items-center p-1 rounded-full cursor-pointer focus:outline-none transition-shadow select-none"
+      style={{
+        width: `${trackW}px`,
+        height: `${trackH}px`,
+        backgroundColor: isDark ? "rgba(15, 23, 42, 0.92)" : "rgba(224, 242, 254, 0.95)",
+        border: isDark ? "1.5px solid rgba(255, 122, 0, 0.45)" : "1.5px solid rgba(249, 115, 22, 0.55)",
+        boxShadow: isDark
+          ? "inset 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 122, 0, 0.2)"
+          : "inset 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 12px rgba(249, 115, 22, 0.25)",
+      }}
+    >
+      {/* Background celestial ambiance */}
+      <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+        {/* Dark mode stars */}
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: isDark ? 1 : 0,
+            scale: isDark ? 1 : 0.6,
+          }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 flex items-center justify-start pl-2"
+        >
+          <span className="w-1 h-1 rounded-full bg-cyan-200 animate-pulse" />
+          <span className="w-0.5 h-0.5 rounded-full bg-amber-200 ml-1.5 -mt-1.5 opacity-80" />
+          <span className="w-0.5 h-0.5 rounded-full bg-white ml-1 mt-1.5 opacity-70" />
+        </motion.div>
+
+        {/* Light mode daylight rays */}
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: isDark ? 0 : 1,
+            scale: isDark ? 0.6 : 1,
+          }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 flex items-center justify-end pr-2"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />
+          <span className="w-1 h-1 rounded-full bg-orange-300/70 ml-0.5 -mt-1" />
+        </motion.div>
+      </div>
+
+      {/* Sliding orb thumb with spring physics */}
+      <motion.div
+        className="relative z-10 flex items-center justify-center rounded-full"
+        style={{
+          width: `${thumbSize}px`,
+          height: `${thumbSize}px`,
+          background: isDark
+            ? "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)"
+            : "linear-gradient(135deg, #fbbf24 0%, #f97316 100%)",
+          boxShadow: isDark
+            ? "0 0 10px rgba(139, 92, 246, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.25)"
+            : "0 0 12px rgba(249, 115, 22, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.6)",
+        }}
+        animate={{
+          x: isDark ? slideX : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 28,
+        }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          {mounted && isDark ? (
+            <motion.div
+              key="moon-icon"
+              initial={{ rotate: -120, scale: 0.2, opacity: 0 }}
+              animate={{ rotate: 0, scale: 1, opacity: 1 }}
+              exit={{ rotate: 120, scale: 0.2, opacity: 0 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className="flex items-center justify-center"
+            >
+              <Moon size={isSmall ? 11 : 12} className="text-cyan-200 fill-cyan-200/40" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="sun-icon"
+              initial={{ rotate: 120, scale: 0.2, opacity: 0 }}
+              animate={{ rotate: 0, scale: 1, opacity: 1 }}
+              exit={{ rotate: -120, scale: 0.2, opacity: 0 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className="flex items-center justify-center"
+            >
+              <Sun size={isSmall ? 12 : 13} className="text-white fill-amber-100" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.button>
+  );
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("about");
   const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [mounted, setMounted] = useState(false);
 
-  const sections = ["home", "services", "products", "about", "contact"];
+  const sections = ["about", "services", "products", "contact"];
   const navItems = [
-    { label: "home", href: "/", type: "page" },
+    { label: "about", href: "/#about", type: "page" },
     { label: "services", href: "/#services", type: "page" },
     { label: "products", href: "/#products", type: "page" },
-    { label: "about", href: "/#about", type: "page" },
     { label: "blog", href: "/blog", type: "page" },
     { label: "buy", href: "/buy", type: "page" },
     { label: "careers", href: "https://kiterobotic-career.vercel.app/careers", type: "external" },
@@ -32,12 +144,69 @@ export default function Navbar() {
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
 
-  // Toggle theme function
+  // Toggle theme with left-bottom circular reveal animation (like TatvaOS)
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
+
+    const performThemeChange = () => {
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+      document.documentElement.setAttribute("data-theme", newTheme);
+    };
+
+    if (typeof document === "undefined") return;
+
+    if (!document.startViewTransition) {
+      // Fallback for browsers without native View Transitions API
+      const overlay = document.createElement("div");
+      overlay.style.position = "fixed";
+      overlay.style.inset = "0";
+      overlay.style.zIndex = "999999";
+      overlay.style.pointerEvents = "none";
+      overlay.style.backgroundColor = newTheme === "dark" ? "#050816" : "#F8FAFC";
+      overlay.style.clipPath = `circle(0px at 0px ${window.innerHeight}px)`;
+      overlay.style.transition = "clip-path 700ms cubic-bezier(0.25, 1, 0.5, 1)";
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => {
+        const endRadius = Math.hypot(window.innerWidth, window.innerHeight);
+        overlay.style.clipPath = `circle(${endRadius}px at 0px ${window.innerHeight}px)`;
+      });
+
+      setTimeout(() => {
+        performThemeChange();
+        setTimeout(() => {
+          overlay.remove();
+        }, 50);
+      }, 400);
+
+      return;
+    }
+
+    // View Transitions API: circular wave expands from bottom-left corner
+    const x = 0;
+    const y = window.innerHeight;
+    const endRadius = Math.hypot(window.innerWidth, window.innerHeight);
+
+    const transition = document.startViewTransition(() => {
+      performThemeChange();
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 750,
+          easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
   };
 
   const handleOpenKmsAi = () => {
@@ -49,7 +218,7 @@ export default function Navbar() {
     if (!scrollContainer) return;
 
     const handleScroll = () => {
-      let current = "home";
+      let current = "about";
       sections.forEach((id) => {
         const section = document.getElementById(id);
         if (section) {
@@ -144,21 +313,7 @@ export default function Navbar() {
                 </li>
               ))}
 
-              {/* Theme Toggle */}
-              <li>
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-lg border border-transparent hover:border-orange-500/30 hover:bg-orange-500/10 transition-all cursor-pointer"
-                  aria-label="Toggle theme"
-                  style={{color: 'var(--text-primary)'}}
-                >
-                  {mounted && theme === "dark" ? (
-                    <Sun size={19} className="text-orange-400 hover:rotate-45 transition-transform" />
-                  ) : (
-                    <Moon size={19} className="text-orange-600 hover:-rotate-12 transition-transform" />
-                  )}
-                </button>
-              </li>
+
 
               {/* KMS-AI Button */}
               <li>
@@ -183,19 +338,6 @@ export default function Navbar() {
 
             {/* Mobile Actions */}
             <div className="flex items-center gap-2 md:hidden">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg"
-                aria-label="Toggle theme"
-                style={{color: 'var(--text-primary)'}}
-              >
-                {mounted && theme === "dark" ? (
-                  <Sun size={20} className="text-orange-400" />
-                ) : (
-                  <Moon size={20} className="text-orange-600" />
-                )}
-              </button>
-
               <button
                 className="p-2 hover:opacity-80 transition-colors"
                 onClick={() => setIsOpen(!isOpen)}
@@ -268,6 +410,23 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+
+      {/* Floating Bottom-Left Theme Toggle (TatvaOS Style) */}
+      <div
+        className="fixed bottom-6 left-6 z-[9998] flex items-center gap-2.5 px-3 py-1.5 rounded-full backdrop-blur-xl border shadow-2xl transition-all duration-300 hover:scale-105"
+        style={{
+          backgroundColor: 'var(--navbar-bg)',
+          borderColor: 'var(--navbar-border)',
+        }}
+      >
+        <span
+          className="text-[10px] font-bold uppercase tracking-widest opacity-80 select-none hidden sm:inline"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          {theme === "dark" ? "Dark" : "Light"}
+        </span>
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} mounted={mounted} size="sm" />
+      </div>
     </>
   );
 }

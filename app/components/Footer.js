@@ -129,7 +129,6 @@ export default function Footer() {
           </div>
 
           <ul className="flex flex-wrap gap-3.5 justify-center md:justify-start text-xs font-semibold uppercase tracking-wider">
-            <li><a href="#home" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>Home</a></li>
             <li><a href="#about" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>About</a></li>
             <li><a href="#services" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>Services</a></li>
             <li><a href="#faq" className="hover:text-orange-500 transition-colors" style={{ color: 'var(--text-secondary)' }}>FAQ</a></li>

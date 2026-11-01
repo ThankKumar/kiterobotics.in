@@ -1,186 +1,217 @@
 "use client";
-import { motion, useAnimation } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { KiteConstellation, KiteConceptCard, CONCEPTS } from "./KitePlan360";
 
-export default function About() {
-  const controls = useAnimation();
-  const [hovering, setHovering] = useState(false);
+function AnimatedCounter({ end, duration = 2200, suffix = "+" }) {
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    controls.start({
-      rotateY: 360,
-      transition: {
-        repeat: Infinity,
-        duration: 15,
-        ease: "linear",
-      },
-    });
-  }, [controls]);
+    let startTime = null;
+    let animId = null;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      // easeOutCubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(ease * end));
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animId);
+  }, [end, duration]);
+
+  return (
+    <span className="font-extrabold font-mono tracking-tight">
+      {count.toLocaleString()}{suffix}
+    </span>
+  );
+}
+
+export default function About() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
+  // Auto-cycle through concepts when not hovering
+  useEffect(() => {
+    if (isHovering) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % CONCEPTS.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isHovering]);
 
   return (
     <section
       id="about"
-      className="flex items-center justify-center px-6 py-12 sm:py-16 relative overflow-hidden transition-colors duration-300"
+      className="w-full flex flex-col justify-start px-4 sm:px-6 lg:px-8 pt-0 pb-6 relative overflow-hidden transition-colors duration-300 select-none"
       style={{
         backgroundColor: 'var(--background)',
         color: 'var(--text-secondary)'
       }}
     >
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 blur-[130px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500/10 blur-[130px] rounded-full pointer-events-none"></div>
+      {/* Anchor for backwards-compatible #home links */}
+      <span id="home" className="absolute top-0 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 w-full">
+      {/* Cybernetic Grid Overlay */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="about-home-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+              <path d="M 48 0 L 0 0 0 48" fill="none" stroke="var(--primary-accent)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#about-home-grid)" />
+        </svg>
+      </div>
 
-        {/* 🔹 Left: Rotating Robot with Glow */}
+      {/* Background Ambient Glows */}
+      <div className="absolute -top-20 right-1/4 w-[400px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-1/3 left-10 w-80 h-80 bg-orange-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-green-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start lg:items-center relative z-10 w-full pt-1">
+
+        {/* 🔹 Left: Interactive 360° Plan Constellation */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex justify-center"
+          className="flex justify-center w-full"
         >
-          <motion.div
-            animate={controls}
-            onHoverStart={() => {
-              setHovering(true);
-              controls.start({
-                rotateY: 360,
-                transition: { repeat: Infinity, duration: 4, ease: "linear" },
-              });
-            }}
-            onHoverEnd={() => {
-              setHovering(false);
-              controls.start({
-                rotateY: 360,
-                transition: { repeat: Infinity, duration: 15, ease: "linear" },
-              });
-            }}
-            className="relative p-[8px] rounded-full shadow-2xl transform-style-3d cursor-pointer"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255, 122, 0, 0.4), rgba(34, 197, 94, 0.4), rgba(6, 182, 212, 0.4))'
-            }}
-          >
-            {/* 🌟 Neon Glow Animation */}
-            <motion.div
-              className="absolute inset-0 rounded-full blur-[40px] opacity-30 pointer-events-none"
-              style={{
-                background: 'linear-gradient(135deg, #FF7A00, #22C55E, #06B6D4)'
-              }}
-              animate={{
-                scale: hovering ? [1, 1.2, 1] : [1, 1.05, 1],
-                opacity: hovering ? [0.4, 0.7, 0.4] : [0.2, 0.35, 0.2],
-              }}
-              transition={{ duration: hovering ? 1 : 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Robot Image */}
-            <div 
-              className="relative rounded-full p-4 overflow-hidden border shadow-inner"
-              style={{
-                backgroundColor: 'var(--card-bg)',
-                borderColor: 'var(--card-border)'
-              }}
-            >
-              <Image
-                src="/360_Degree_Plan.png"
-                alt="Rotating Robot"
-                width={450}
-                height={450}
-                className="rounded-full object-cover opacity-95"
-                priority
-              />
-            </div>
-          </motion.div>
+          <KiteConstellation
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+            isHovering={isHovering}
+            setIsHovering={setIsHovering}
+          />
         </motion.div>
 
-        {/* 🔹 Right: Text + Logo + Button */}
+        {/* 🔹 Right: Text + Concept Detail Card + Button Line + Animated Stats */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center lg:text-left"
+          className="text-center lg:text-left flex flex-col justify-center"
         >
           <h2 
-            className="text-4xl md:text-5xl font-black mb-6 tracking-tight flex items-center justify-center lg:justify-start gap-3"
+            className="text-2xl sm:text-3xl lg:text-4xl font-black mb-1 tracking-tight flex items-center justify-center lg:justify-start gap-2.5"
             style={{ color: 'var(--text-primary)' }}
           >
-             <span className="w-8 h-1.5 rounded-full bg-gradient-to-r from-orange-500 to-green-500"></span> About <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-green-500 to-cyan-500">KITE ROBOTICS</span>
+             <span className="w-6 h-1 rounded-full bg-gradient-to-r from-orange-500 to-green-500"></span> About <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-green-500 to-cyan-500">KITE ROBOTICS</span>
           </h2>
-          <div className="text-base sm:text-lg leading-relaxed mb-8 font-normal space-y-5" style={{ color: 'var(--text-secondary)' }}>
-            <p className="cursor-default">
-              KITE Robotics sparks innovation in young minds, shaping India’s future through hands-on STEM learning.
-              Led by expert mentors from premier IIT institutes, our programs nurture creativity, problem-solving, and global perspectives, empowering students to thrive in a tech-driven world.
-            </p>
-            <div 
-              className="border p-6 sm:p-8 rounded-2xl shadow-xl backdrop-blur-md cursor-default text-left transition-colors"
-              style={{
-                backgroundColor: 'var(--card-bg)',
-                borderColor: 'var(--card-border)',
-                boxShadow: 'var(--card-shadow)'
-              }}
-            >
-               <h4 
-                 className="font-bold uppercase tracking-widest text-xs flex items-center gap-2 mb-5"
-                 style={{ color: 'var(--text-primary)' }}
-               >
-                 <span className="w-2 h-2 rounded-full bg-green-500 shadow-md"></span> The Core Advantage
-               </h4>
-               <ul className="space-y-3.5 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                 <li className="flex items-start gap-2.5">
-                   <CheckCircle2 size={18} className="text-orange-500 flex-shrink-0 mt-0.5" />
-                   <span><strong style={{color: 'var(--text-primary)'}}>Curriculum:</strong> Age-appropriate STEM challenges designed to inspire.</span>
-                 </li>
-                 <li className="flex items-start gap-2.5">
-                   <CheckCircle2 size={18} className="text-green-500 flex-shrink-0 mt-0.5" />
-                   <span><strong style={{color: 'var(--text-primary)'}}>Hardware:</strong> Build, code, and explore from simple machines to advanced rovers.</span>
-                 </li>
-                 <li className="flex items-start gap-2.5">
-                   <CheckCircle2 size={18} className="text-cyan-500 flex-shrink-0 mt-0.5" />
-                   <span><strong style={{color: 'var(--text-primary)'}}>Global Scope:</strong> Real-world projects, workshops and competitions that go beyond borders.</span>
-                 </li>
-                 <li className="flex items-start gap-2.5">
-                   <CheckCircle2 size={18} className="text-orange-500 flex-shrink-0 mt-0.5" />
-                   <span><strong style={{color: 'var(--text-primary)'}}>Mentorship:</strong> Passionate instructors guiding every step of the journey.</span>
-                 </li>
-               </ul>
-            </div>
-          </div>
+          
+          <p 
+            className="text-xs sm:text-sm leading-relaxed mb-1.5 font-normal cursor-default"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            KITE Robotics sparks innovation in young minds, shaping India’s future through hands-on STEM learning led by expert IIT mentors.
+          </p>
 
-          {/* 🌟 Logo + Button Flex Row */}
-          <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-6 mt-8">
-            {/* Logo with Glow */}
-            <div className="relative inline-block group">
-              <div className="relative p-[2px] rounded-2xl bg-gradient-to-r from-orange-500/50 via-green-500/50 to-cyan-500/50 shadow-md">
-                <div className="bg-white rounded-[14px] px-4 py-2 flex items-center justify-center">
-                  <Image
-                    src="/kite_logo.jpg"
-                    alt="KITE Robotics Logo"
-                    width={180}
-                    height={80}
-                    className="object-contain h-12 w-auto"
-                  />
-                </div>
-              </div>
-            </div>
+          {/* 🌟 Concept Detail Card + 01-08 Navigator */}
+          <KiteConceptCard
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+            setIsHovering={setIsHovering}
+          />
 
-            {/* Call to Action Button */}
+          {/* 🌟 Button Line: Join Network + DPIIT Certificate + Searching Funding */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mt-2">
+            {/* Join Network Button */}
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-white font-bold tracking-wider uppercase text-xs shadow-lg transition-all duration-300 relative overflow-hidden group cursor-pointer"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-bold tracking-wider uppercase text-xs shadow-md transition-all duration-300 relative overflow-hidden group cursor-pointer"
               style={{
                 background: 'linear-gradient(135deg, #FF7A00 0%, #22C55E 100%)',
-                boxShadow: '0 4px 20px rgba(255, 122, 0, 0.3)'
+                boxShadow: '0 4px 16px rgba(255, 122, 0, 0.25)'
               }}
             >
-              <span className="relative z-10">Join Network</span>
-              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              <span>Join Network</span>
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
             </motion.a>
+
+            {/* DPIIT Certificate Button */}
+            <a
+              href="https://recognition-be.startupindia.gov.in/s3/download/document/RECOGNITION_CERTIFICATE/76916f6a-7dbc-41bc-a327-b06389894b73.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 border font-bold rounded-xl text-xs tracking-wider uppercase hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 text-center cursor-pointer backdrop-blur-sm shadow-sm"
+              style={{
+                borderColor: 'var(--primary-accent)',
+                color: 'var(--text-primary)',
+                backgroundColor: 'var(--card-bg)'
+              }}
+            >
+              <span>DPIIT Certificate</span>
+            </a>
+
+            {/* Searching Funding Button */}
+            <a
+              href="https://wa.me/919564866985"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 border font-bold rounded-xl text-xs tracking-wider uppercase hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 text-center cursor-pointer backdrop-blur-sm shadow-sm"
+              style={{
+                borderColor: '#22C55E',
+                color: 'var(--text-primary)',
+                backgroundColor: 'var(--card-bg)'
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
+              <span>Searching Funding</span>
+            </a>
+          </div>
+
+          {/* 🌟 Animated Stats Counter Row (Automatically increases from 0 to target) */}
+          <div className="grid grid-cols-4 gap-2 pt-2.5 mt-2.5 border-t border-white/10 w-full">
+            <div className="flex flex-col text-center lg:text-left">
+              <span className="text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 font-mono">
+                <AnimatedCounter end={4} suffix="+" />
+              </span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                IITs Trainer
+              </span>
+            </div>
+
+            <div className="flex flex-col text-center lg:text-left">
+              <span className="text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500 font-mono">
+                <AnimatedCounter end={10000} suffix="+" />
+              </span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                Students
+              </span>
+            </div>
+
+            <div className="flex flex-col text-center lg:text-left">
+              <span className="text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-mono">
+                <AnimatedCounter end={5} suffix="+" />
+              </span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                School
+              </span>
+            </div>
+
+            <div className="flex flex-col text-center lg:text-left">
+              <span className="text-lg sm:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-mono">
+                <AnimatedCounter end={19846} suffix="+" />
+              </span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                Visitors
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>
