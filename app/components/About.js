@@ -53,7 +53,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="w-full flex flex-col justify-start px-4 sm:px-6 lg:px-8 pt-0 pb-6 relative overflow-hidden transition-colors duration-300 select-none"
+      className="w-full flex flex-col justify-start px-4 sm:px-6 lg:px-8 pt-0 pb-1 relative overflow-hidden transition-colors duration-300 select-none"
       style={{
         backgroundColor: 'var(--background)',
         color: 'var(--text-secondary)'
